@@ -7,26 +7,26 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class UpdateUserDetails {
-	    @NotBlank
+
 	    @Size(min = 3, max = 20)
 	    private String username;
 	    
-	    @NotBlank
+
 	    @Size(min = 2, max = 15)
 	    private String firstname;
 	    
-	    @NotBlank
+
 	    @Size(min = 2, max = 15)
 	    private String lastname;
 	 
-	    @NotBlank
+
 	    @Size(max = 50)
 	    @Email
 	    private String email;
 	    
 	    private Set<String> role;
 	    
-	    @NotBlank
+
 	    @Size(min = 6, max = 40)
 	    private String password;
 	  
@@ -79,4 +79,12 @@ public class UpdateUserDetails {
 		public void setLastname(String lastname) {
 			this.lastname = lastname;
 		}
+
+		@Override
+		public String toString() {
+			return "UpdateUserDetails [username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
+					+ ", email=" + email + ", role=" + role + ", password=" + password + "]";
+		}
+		
+		
 }

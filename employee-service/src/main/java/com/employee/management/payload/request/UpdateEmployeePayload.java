@@ -80,4 +80,16 @@ public class UpdateEmployeePayload {
 		public void setLastname(String lastname) {
 			this.lastname = lastname;
 		}
+
+	@Override
+	public String toString() {
+		return "UpdateEmployeePayload{" +
+				"username='" + username + '\'' +
+				", firstname='" + firstname + '\'' +
+				", lastname='" + lastname + '\'' +
+				", email='" + email + '\'' +
+				", role=" + role +
+				", password='" + password + '\'' +
+				'}';
+	}
 }

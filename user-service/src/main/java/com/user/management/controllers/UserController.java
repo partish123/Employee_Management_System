@@ -51,15 +51,15 @@ public class UserController {
 	public ResponseEntity<?> updateUser(@Valid @RequestBody UpdateUserDetails userDetails, @PathVariable String id)
 			throws UserException {
 		try {
-			
-			
+			System.out.println("Inside UserController updateUser-");
 			Object updateUser = userService.updateUser(userDetails,Long.parseLong(id));
+			System.out.println("Inside updateUser--{}"+ updateUser);
 			Object updateEmployee = userService.updateEmployee(userDetails,Long.parseLong(id));
-			
+		    System.out.println("Inside updateUser--{}"+ updateEmployee);
 			if (updateUser != null && updateEmployee !=null)
 			  return ResponseEntity.ok(new MessageResponse("User updated successfully!"));
 			else
-				throw new UserException("Book not updated--->");
+				throw new UserException("User not updated--->");
 
 		}
 
@@ -69,13 +69,14 @@ public class UserController {
 
 	}
 
-	@DeleteMapping(value = "/deleteUser/{userId}")
+	@DeleteMapping(value = "/deleteUser/{id}")
 //	@PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
-	public ResponseEntity<?> deleteUser(@PathVariable Long id) throws UserException {
+	public ResponseEntity<?> deleteUser(@PathVariable String id) throws UserException {
 
 		try {
-			Object message1 = userService.deleteUser(id);
-			Object message2 = userService.deleteEmployee(id);
+			System.out.println("Inside UserController deleteUser-");
+			Object message1 = userService.deleteUser(Long.parseLong(id));
+			Object message2 = userService.deleteEmployee(Long.parseLong(id));
 			if (message1 != null && message2!=null)
 				return ResponseEntity.status(200).body("User deleted successfully");
 			else
@@ -91,9 +92,12 @@ public class UserController {
     @GetMapping("/getAllUsers")
     public ResponseEntity<?> getAllUsers() throws UserException {
         try {
+			System.out.println("Inside UserController getAllUsers-");
         	Object userList = userService.getAllUsers();
-            if(userList!=null)
-            return new ResponseEntity<>(userList,HttpStatus.OK);
+            if(userList!=null) {
+				System.out.println("Inside UserController getAllUsers-"+userList);
+				return new ResponseEntity<>(userList, HttpStatus.OK);
+			}
             else
             	return ResponseEntity.status(500).body("Failed to retrieve list of users!");
         }catch (Exception e){
@@ -102,10 +106,11 @@ public class UserController {
     }
     
     
-    @GetMapping("/getUser/{userId}")
-    public ResponseEntity<?> getUserById(Long id) throws UserException {
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<?> getUserById(String id) throws UserException {
         try {
-        	Object user = userService.getUserById(id);
+			System.out.println("Inside UserController getUserById-");
+        	Object user = userService.getUserById(Long.parseLong(id));
             if(user!=null)
             return new ResponseEntity<>(user,HttpStatus.OK);
             else
@@ -123,6 +128,7 @@ public class UserController {
 	public ResponseEntity<?> getAllEmployees() throws UserException {
 
 		try {
+			System.out.println("Inside UserController getAllEmployees-");
 			Object allUsers = userService.getAllEmployees();
 			if (allUsers != null)
 				return ResponseEntity.status(200).body(allUsers);
@@ -135,12 +141,13 @@ public class UserController {
 	}
 	
 
-	@GetMapping(value = "/getEmployee/{empId}")
+	@GetMapping(value = "/getEmployee/{id}")
 //	@PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
-	public ResponseEntity<?> getEmployee( @PathVariable String empId) throws UserException {
+	public ResponseEntity<?> getEmployee( @PathVariable String id) throws UserException {
 
 		try {
-			Object user = userService.getEmployeeById(empId);
+			System.out.println("Inside UserController getEmployee-");
+			Object user = userService.getEmployeeById(id);
 			if (user != null)
 				return ResponseEntity.status(200).body(user);
 			else

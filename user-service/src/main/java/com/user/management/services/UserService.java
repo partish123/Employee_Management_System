@@ -10,6 +10,8 @@ import com.user.management.repository.RoleRepository;
 import com.user.management.repository.UserRepository;
 import com.user.management.utility.UserException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,7 @@ public class UserService {
 
 //	@Autowired
 //	private User user;
-
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	public Object updateUser(UpdateUserDetails userDetails, Long id) throws UserException {
 
@@ -115,7 +117,7 @@ public class UserService {
 
 	public Object deleteUser(Long id) throws UserException {
 		try {
-			
+			logger.info("Inside UserService deleteUser----{}",id);
 			Optional<User> user = userRepository.findById(id);
 			if(user.isPresent()) {
 				userRepository.delete(user.get());
@@ -168,7 +170,7 @@ public class UserService {
 	
 	
 	public Object saveEmployee(SignupRequest signUpRequest) throws UserException {
-
+		logger.info("Inside saveEmployee----{}",signUpRequest);
 		ResponseEntity<String> savedEmployee = restClient.saveEmployee("/createEmployee", signUpRequest);
 		if (savedEmployee != null) {
 			return savedEmployee;
@@ -179,7 +181,8 @@ public class UserService {
 	}
 
 	public Object updateEmployee(UpdateUserDetails userDetails, Long id) throws UserException {
-		ResponseEntity<String> updateEmployee = restClient.updateEmployee("/updateEmployee/{" + id + "}", userDetails);
+		System.out.println("Inside UserService updateEmployee---{}"+ userDetails);
+		ResponseEntity<String> updateEmployee = restClient.updateEmployee("/updateEmployee/" + id , userDetails);
 		if (updateEmployee != null) {
 			return updateEmployee;
 		} else {
@@ -190,12 +193,15 @@ public class UserService {
 	
 
 	public Object deleteEmployee(Long id) throws UserException {
-		return restClient.deleteEmployee("/deleteEmployee/{"+id+"}");
+		logger.info("Inside UserService deleteEmployee----{}",id);
+		return restClient.deleteEmployee("/deleteEmployee/"+id);
 		
 	}
 
 	public Object getAllEmployees() throws UserException {
+		logger.info("Inside UserService getAllEmployees----");
 		ResponseEntity<Object> employeeList = restClient.getAllEmployees("/getAllEmployees");
+		logger.info("List of employee----{}",employeeList);
 		if (employeeList != null) {
 			return employeeList;
 		} else {
@@ -204,7 +210,9 @@ public class UserService {
 	}
 
 	public Object getEmployeeById(String empId) throws UserException {
-		ResponseEntity<Object> employee = restClient.getEmployeeById("/getEmployee/{"+empId+"}");
+		logger.info("Inside UserService getEmployeeById----");
+		ResponseEntity<Object> employee = restClient.getEmployeeById("/getEmployee/"+empId);
+		logger.info("employee fetched details are----{}",employee);
 		if (employee != null) {
 			return employee;
 		} else {

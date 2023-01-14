@@ -9,6 +9,8 @@ import com.employee.management.utility.EmployeeException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +27,12 @@ public class EmployeeService {
 
 //	@Autowired
 //	Employee employee;
-	
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
 	public MessageResponse createEmployee(CreateEmployeePayload payload) throws EmployeeException {
 		if (payload != null) {
+			logger.info("Inside EmployeeService createEmployee----{}",payload);
 			Employee employee = new Employee();
 			employee.setFirstname(payload.getFirstname());
 			employee.setLastname(payload.getLastname());
@@ -43,6 +46,7 @@ public class EmployeeService {
 	}
 
 	public MessageResponse updateEmployee(UpdateEmployeePayload payload, Long id) throws EmployeeException {
+		logger.info("Inside EmployeeService updateEmployee----{}",payload);
 		Optional<Employee> employee = employeeRepository.findById(id);
 		if (payload != null && employee.isPresent()) {
 			employee.get().setFirstname(payload.getFirstname());
@@ -58,7 +62,7 @@ public class EmployeeService {
 
 	public MessageResponse deleteEmployee(Long id) throws EmployeeException{
 		try {
-
+			logger.info("Inside EmployeeService deleteEmployee----{}",id);
 			Optional<Employee> user = employeeRepository.findById(id);
 			if (user.isPresent()) {
 				employeeRepository.delete(user.get());

@@ -69,4 +69,15 @@ public class CreateEmployeePayload {
 		this.lastname = lastname;
 	}
 
+
+    @Override
+    public String toString() {
+        return "CreateEmployeePayload{" +
+                "username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
