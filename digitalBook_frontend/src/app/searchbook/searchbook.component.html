@@ -1,0 +1,71 @@
+<div class="container">
+
+    <div class="card">
+
+        <form (ngSubmit)="doSubmitForm()">
+
+            <h1>Search Books</h1>
+
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Title*</mat-label>
+                <input name="title" [(ngModel)]="book.bookTitle" matInput placeholder="Enter Title">
+            </mat-form-field>
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Author*</mat-label>
+                <input name="author" [(ngModel)]="book.authorId" matInput placeholder="Enter Author ID">
+            </mat-form-field>
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Publisher*</mat-label>
+                <input name="publisher" [(ngModel)]="book.publisher" matInput placeholder="Enter Publisher">
+            </mat-form-field>
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Category*</mat-label>
+                <input name="category" [(ngModel)]="book.category" matInput placeholder="Enter Category">
+            </mat-form-field>
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Price</mat-label>
+                <input name="price" [(ngModel)]="book.price" matInput placeholder="Enter Price">
+            </mat-form-field>
+
+            <div class="text-center">
+
+                <mat-spinner *ngIf="flag" style="margin: auto;"> </mat-spinner>
+
+                <button [disabled]="flag" type="submit" mat-raised-button color="primary">Search</button>
+                <button type="reset" mat-raised-button color="accent">Reset</button>
+
+
+            </div>
+
+        </form>
+
+        {{ book | json }}
+
+
+    </div>
+
+</div>
+
+<div class="container" *ngIf="isFound">
+    <header class="jumbotron">
+        <h3>
+            <strong>Books found are as follows:</strong>
+        </h3>
+    </header>
+
+    <ul *ngFor="let book of booklist">
+        <li *ngIf="this.role === 'ROLE_AUTHOR'"><strong>Title:</strong><a href="/author" routerLink="author/{{book.bookTitle}}">{{book.bookTitle}}</a></li>
+        <li *ngIf="this.role === 'ROLE_READER'"><strong>Title:</strong>{{book.bookTitle}}</li>
+        <li><strong>Author Id:</strong>{{book.authorID}}</li>
+        <li><strong>Publisher:</strong>{{book.publisher}}</li>
+        <li><strong>Price:</strong>{{book.price}}</li>
+        <li><strong>Active status:</strong>{{book.active}}</li>
+        <li><strong>Total Subscriptions:</strong>{{book.subscriptionCount}}</li>
+
+        <div>
+            <button (click)="subscribe(book.id)"
+              *ngIf="this.role === 'ROLE_READER'" mat-raised-button color="primary">Subscribe</button>
+        </div>
+    </ul>
+
+</div>

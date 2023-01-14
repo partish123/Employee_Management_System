@@ -1,0 +1,35 @@
+<div class="container">
+
+    <table style="width:100%">
+        <tr>
+            <th>Title</th>
+            <th>Publisher</th>
+            <th>Price</th>
+            <th>Content</th>
+            <th>Published date</th>
+            <th>Active Status</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr *ngFor="let book of bookList">
+            <td>{{book.bookTitle}}</td>
+            <td>{{book.publisher}}</td>
+            <td>{{book.price}} Rupees/-</td>
+            <td>{{book.content}}</td>
+            <td>{{book.createdOn | date:'dd-MM-yyy'}}</td>
+            <td>{{book.active}}</td>
+            <!-- <td hidden #bookId>{{book.id}}</td>
+            <td hidden #block>{{book.active}}</td> -->
+            <td><span>
+                    <button style="margin-right: 10px;" (click)="doUpdate(book.id)" mat-raised-button color="primary">Update</button>
+                    <button *ngIf="book.active==true" (click)="doBlock(book.id)" mat-raised-button color="accent">Block</button>
+                    <button *ngIf="book.active==false" (click)="doUnBlock(book.id)" mat-raised-button color="accent">Unblock</button>
+                </span>
+            </td>
+
+        </tr>
+
+    </table>
+
+
+</div>

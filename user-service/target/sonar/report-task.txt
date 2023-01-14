@@ -1,0 +1,6 @@
+projectKey=user_service
+serverUrl=http://localhost:9000
+serverVersion=8.6.0.39681
+dashboardUrl=http://localhost:9000/dashboard?id=user_service
+ceTaskId=AYUEtKmXB4Ne2c16nLKG
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYUEtKmXB4Ne2c16nLKG

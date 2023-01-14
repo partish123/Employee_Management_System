@@ -1,0 +1,40 @@
+<div class="container">
+
+
+    <table style="width:100%">
+        <tr>
+            <th>Title</th>
+            <th>Publisher</th>
+            <th>Price</th>
+            <th>Published date</th>
+            <th>Active Status</th>
+            <th>Actions</th>
+        </tr>
+
+
+        <tr *ngFor="let book of bookList">
+            <td>{{book.bookTitle}}</td>
+            <td>{{book.publisher}}</td>
+            <td>{{book.price}} Rs/-</td>
+            <td>{{book.createdOn | date:'dd-MM-yyy'}}</td>
+            <td>{{book.active}}</td>
+            <td><span>
+                    <button [disabled]=!book.active style="margin-right: 10px;" (click)="getContent(book.bookTitle)"
+                        mat-raised-button color="primary">Read</button>
+                    <button [disabled]=!book.active (click)="cancelSubscribe(book.id)" mat-raised-button
+                        color="accent">Unsubscribe</button>
+                </span>
+            </td>
+
+        </tr>
+
+
+    </table>
+
+
+    <!-- <div >
+        <li *ngIf="bookList.length>0">No Books are Subscribed by Reader</li>
+    </div> -->
+
+
+</div>
