@@ -18,11 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -40,8 +36,7 @@ public class UserService {
 	@Autowired
 	private RestApiCall restClient;
 
-//	@Autowired
-//	private User user;
+
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	public Object updateUser(UpdateUserDetails userDetails, Long id) throws UserException {
@@ -49,66 +44,82 @@ public class UserService {
 		try {
 			Optional<User> user = userRepository.findById(id);
 
-			if (userRepository.existsByUsername(userDetails.getUsername())) {
-				return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-			}
+			if(user.isPresent()) {
 
-			if (userRepository.existsByEmail(userDetails.getEmail())) {
-				return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-			}
+				if (userRepository.existsByUsername(userDetails.getUsername())) {
+					return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+				}
 
-			if (user.isPresent() && user.get().getId() == id) {
-				user.get().setUsername(userDetails.getUsername());
-				user.get().setFirstname(userDetails.getFirstname());
-				user.get().setLastname(userDetails.getLastname());
-				user.get().setEmail(userDetails.getEmail());
-				user.get().setPassword(encoder.encode(userDetails.getPassword()));
+				if (userRepository.existsByEmail(userDetails.getEmail())) {
+					return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+				}
 
-			}
-
-			Set<String> strRoles = userDetails.getRole();
-			Set<Role> roles = new HashSet<>();
-
-			if (strRoles == null) {
-				Optional<User> user1 = userRepository.findByUsername(userDetails.getUsername());
-
-				roles.addAll(user1.get().getRoles());
-			} else {
-				strRoles.forEach(role -> {
-					switch (role) {
-
-					case "Developer":
-						Role devRole = roleRepository.findByName(ERole.ROLE_DEVELOPER)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(devRole);
-
-						break;
-
-					case "Tester":
-						Role testerRole = roleRepository.findByName(ERole.ROLE_TESTER)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(testerRole);
-
-						break;
-
-					case "Analyst":
-						Role analystRole = roleRepository.findByName(ERole.ROLE_ANALYST)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(analystRole);
-
-						break;
-
-					default:
-						Role userRole = roleRepository.findByName(ERole.ROLE_ANALYST)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(userRole);
+				if (Objects.equals(user.get().getId(), id)) {
+					if (userDetails.getUsername() != null && !userDetails.getUsername().isEmpty()) {
+						user.get().setUsername(userDetails.getUsername());
 					}
-				});
-			}
+					if (userDetails.getFirstname() != null && !userDetails.getFirstname().isEmpty()) {
+						user.get().setFirstname(userDetails.getFirstname());
+					}
+					if (userDetails.getLastname() != null && !userDetails.getLastname().isEmpty()) {
+						user.get().setLastname(userDetails.getLastname());
+					}
+					if (userDetails.getEmail() != null && !userDetails.getEmail().isEmpty()) {
+						user.get().setEmail(userDetails.getEmail());
+					}
+					if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
+						user.get().setPassword(encoder.encode(userDetails.getPassword()));
+					}
+				}
 
-			user.get().setRoles(roles);
-			userRepository.save(user.get());
-			return new MessageResponse("User updated");
+				Set<String> strRoles = userDetails.getRole();
+				Set<Role> roles = new HashSet<>();
+
+				if (strRoles == null) {
+					Optional<User> user1 = userRepository.findByUsername(userDetails.getUsername());
+					if (user1.isPresent() && user1.get().getRoles() != null && !user1.get().getRoles().isEmpty()) {
+						roles.addAll(user1.get().getRoles());
+					}
+				} else {
+					strRoles.forEach(role -> {
+						switch (role) {
+
+							case "Developer":
+								Role devRole = roleRepository.findByName(ERole.ROLE_DEVELOPER)
+										.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+								roles.add(devRole);
+
+								break;
+
+							case "Tester":
+								Role testerRole = roleRepository.findByName(ERole.ROLE_TESTER)
+										.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+								roles.add(testerRole);
+
+								break;
+
+							case "Analyst":
+								Role analystRole = roleRepository.findByName(ERole.ROLE_ANALYST)
+										.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+								roles.add(analystRole);
+
+								break;
+
+//					default:
+//						Role userRole = roleRepository.findByName(ERole.ROLE_ANALYST)
+//								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//						roles.add(userRole);
+						}
+					});
+					user.get().setRoles(roles);
+				}
+
+				userRepository.save(user.get());
+				return new MessageResponse("User updated");
+			}
+			else{
+				throw new UserException("User not found in DB!");
+			}
 		} catch (Exception e) {
 			throw new UserException("Something went wrong. Please try after some time!");
 		}

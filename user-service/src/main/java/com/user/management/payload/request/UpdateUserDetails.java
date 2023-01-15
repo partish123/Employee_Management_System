@@ -83,7 +83,7 @@ public class UpdateUserDetails {
 		@Override
 		public String toString() {
 			return "UpdateUserDetails [username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
-					+ ", email=" + email + ", role=" + role + ", password=" + password + "]";
+					+ ", email=" + email + ", role=" + role + "]";
 		}
 		
 		

@@ -49,9 +49,15 @@ public class EmployeeService {
 		logger.info("Inside EmployeeService updateEmployee----{}",payload);
 		Optional<Employee> employee = employeeRepository.findById(id);
 		if (payload != null && employee.isPresent()) {
-			employee.get().setFirstname(payload.getFirstname());
-			employee.get().setLastname(payload.getLastname());
-			employee.get().setEmail(payload.getEmail());
+			if(payload.getFirstname()!=null && !payload.getFirstname().isEmpty()) {
+				employee.get().setFirstname(payload.getFirstname());
+			}
+			if(payload.getLastname()!=null && !payload.getLastname().isEmpty()) {
+				employee.get().setLastname(payload.getLastname());
+			}
+			if(payload.getEmail()!=null && !payload.getEmail().isEmpty()) {
+				employee.get().setEmail(payload.getEmail());
+			}
 			employeeRepository.save(employee.get());
 			return new MessageResponse("Employee updated successfully");
 		} else {
