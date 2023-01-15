@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
- const AUTH_API = 'http://localhost:8081/api/user';
+ const AUTH_API = 'http://localhost:8085/api/user/';
 
 // const AUTH_API = 'https://ky254fzfge.execute-api.us-east-1.amazonaws.com/UAT/';
 
@@ -24,9 +24,11 @@ export class AuthService {
     }, httpOptions);
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
+  register(username: string, firstname:string, lastname:string , email: string, password: string): Observable<any> {
     return this.http.post(AUTH_API + 'sign-up', {
       username,
+      firstname,
+      lastname,
       email,
       password,
     }, httpOptions);

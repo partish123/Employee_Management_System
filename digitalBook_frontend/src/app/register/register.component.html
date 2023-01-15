@@ -106,7 +106,7 @@
         <label for="password">Password</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6" maxlength="15" 
           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,20}$"
-          #password="ngModel" />
+          #password="ngModel" [class.is-invalid]="password.invalid && password.touched" ngModel/>
         <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
           <!-- <div *ngIf="password.errors.required">Password is required</div>
           <div *ngIf="password.errors.minlength">

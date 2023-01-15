@@ -16,6 +16,7 @@ import { AlertPromise } from 'selenium-webdriver';
 import { AllMyBooksComponent } from './all-my-books/all-my-books.component';
 import { UpdatebookComponent } from './updatebook/updatebook.component';
 import { ReaderBooksComponent } from './reader-books/reader-books.component';
+import { JobComponent } from './job/job.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,12 +28,13 @@ const routes: Routes = [
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
+  { path: 'jobs', component: JobComponent },
   { path: 'searchbook/author/:title', component: BoardAuthorComponent }, 
   { path: 'author', component: BoardAuthorComponent }, 
   { path: 'read', component: BoardReaderComponent },
   { path: 'author/books', component: AllMyBooksComponent },
   { path: 'reader/books', component: ReaderBooksComponent },
-  { path: 'author/books/update', component: UpdatebookComponent },
+  { path: 'update', component: UpdatebookComponent },
   { path: 'reader', component: BoardReaderComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

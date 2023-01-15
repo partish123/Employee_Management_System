@@ -212,7 +212,7 @@ public class UserService {
 	public Object getAllEmployees() throws UserException {
 		logger.info("Inside UserService getAllEmployees----");
 		ResponseEntity<Object> employeeList = restClient.getAllEmployees("/getAllEmployees");
-		logger.info("List of employee----{}",employeeList);
+		logger.info("List of employee----{}",employeeList.getBody());
 		if (employeeList != null) {
 			return employeeList;
 		} else {

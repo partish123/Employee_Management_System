@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
 
-const API_URL:string = 'http://localhost:8081/api/user/';
+const API_URL:string = 'http://localhost:8085/api/user/manage';
 
 
 
@@ -12,7 +12,25 @@ const API_URL:string = 'http://localhost:8081/api/user/';
 })
 export class UserService {
 
+
   constructor(private http: HttpClient, private token: TokenStorageService) { }
+
+  getAllUsers() : Observable<any>{
+    return this.http.get(`${API_URL}/getAllEmployees`);
+  }
+
+  updateUser(firstname: string, lastname: string, email: string, role: any, userID:any): Observable<any>{
+    return this.http.post(`${API_URL}/updateUser/${userID}`,{firstname,    
+      lastname,
+      email,
+      role},{ responseType: 'text' });
+ }
+
+
+
+
+
+
 
   authorID: any = this.token.getUser().id;
 
@@ -41,9 +59,7 @@ export class UserService {
      return this.http.post(`${API_URL}author/${this.token.getUser().id}/books`,createBook,{ responseType: 'text' });
   }
 
-  updateBook(updatebook:any,bookID:any): Observable<any>{
-    return this.http.post(`${API_URL}author/${this.token.getUser().id}/books/${bookID}`,updatebook,{ responseType: 'text' });
- }
+ 
 
   getAuthorBooks(): Observable<any>{
     return this.http.get(`${API_URL}search?author=${this.authorID}`);

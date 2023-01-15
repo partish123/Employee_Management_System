@@ -4,21 +4,38 @@
 
         <form (ngSubmit)="doUpdateForm()">
 
-            <h1>Update Book</h1>
+            <h1>Update User</h1>
 
             <mat-form-field class="field" appearance="outline">
-                <mat-label>Title</mat-label>
-                <input name="title" [(ngModel)]="updatebook.bookTitle" matInput placeholder="Enter Title">
+                <mat-label>First Name</mat-label>
+                <input name="firstname" [(ngModel)]="updateuser.firstname" matInput placeholder="Enter First Name">
             </mat-form-field>
             <mat-form-field class="field" appearance="outline">
-                <mat-label>Category</mat-label>
-                <input name="category" [(ngModel)]="updatebook.category" matInput placeholder="Enter Category">
+                <mat-label>Last Name</mat-label>
+                <input name="lastname" [(ngModel)]="updateuser.lastname" matInput placeholder="Enter Last Name">
             </mat-form-field>
             <mat-form-field class="field" appearance="outline">
-                <mat-label>Image</mat-label>
-                <input name="image" [(ngModel)]="updatebook.image" matInput placeholder="Insert image">
+                <mat-label>Email</mat-label>
+                <input name="email" type="email" [(ngModel)]="updateuser.email" email
+                    pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,3}$" matInput placeholder="Enter your email id">
             </mat-form-field>
-            <mat-form-field class="field" appearance="outline">
+
+            <mat-label>Select Role</mat-label> <br>
+            <!-- <input type="radio" name="role" value="Author" /> Developer
+            <input type="radio" name="role" value="Reader" /> Tester
+            <input type="radio" name="role" value="Reader" /> Analyst -->
+
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button name="role" value="Developer" [(ngModel)]="updateuser.role">Developer </mat-radio-button><br>
+                <mat-radio-button name="role" value="Tester" [(ngModel)]="updateuser.role">Tester </mat-radio-button><br>
+                <mat-radio-button name="role" value="Analyst" [(ngModel)]="updateuser.role">Analyst</mat-radio-button>
+            </mat-radio-group>
+
+
+
+
+
+            <!-- <mat-form-field class="field" appearance="outline">
                 <mat-label>Price</mat-label>
                 <input name="price" [(ngModel)]="updatebook.price" matInput placeholder="Enter Price">
             </mat-form-field>
@@ -34,7 +51,7 @@
                 <mat-label>Content</mat-label>
                 <textarea name="message" [(ngModel)]="updatebook.bookcontent" rows="10" matInput
                     placeholder="Enter your book content here..."></textarea>
-            </mat-form-field>
+            </mat-form-field> -->
 
 
             <div class="text-center">
@@ -49,7 +66,9 @@
 
         </form>
 
-        {{ updatebook | json }}
+        {{ updateuser | json }}
+
+
 
 
     </div>

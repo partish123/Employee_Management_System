@@ -5,30 +5,39 @@
       <li class="nav-item">
         <a href="/home" class="nav-link" routerLink="home">Home </a>
       </li>
-      <!-- <li class="nav-item">
-        <a href="/searchbook" class="nav-link" routerLink="/searchbook">Search</a>
-      </li> -->
-      <li class="nav-item">
-        <a href="/createbook" class="nav-link"  *ngIf="isLoggedIn && showAuthorBoard" routerLink="/createbook">Create</a>
-      </li>
       <li class="nav-item" *ngIf="showAdminBoard">
         <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
       </li>
-      <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/jobs" class="nav-link" routerLink="jobs">Jobs</a>
       </li>
+      <li class="nav-item" *ngIf="showManagerBoard">
+        <a href="/admin" class="nav-link" routerLink="admin">List of Employees</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a href="/searchbook" class="nav-link" routerLink="/searchbook">Search</a>
+      </li> -->
+      <!-- <li class="nav-item">
+        <a href="/createbook" class="nav-link"  *ngIf="isLoggedIn && showAuthorBoard" routerLink="/createbook">Create</a>
+      </li> -->
+      <!-- <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
+      </li> -->
+      <!-- <li class="nav-item" *ngIf="showModeratorBoard">
+        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
+      </li> -->
       <!-- <li class="nav-item" *ngIf="showAuthorBoard">
         <a href="/author" class="nav-link" routerLink="/author">Author Board</a>
       </li> -->
-      <li class="nav-item" *ngIf="showAuthorBoard">
+      <!-- <li class="nav-item" *ngIf="showAuthorBoard">
       <a href="/author/books" class="nav-link" routerLink="author/books">All My Books</a>
-      </li>
+      </li> -->
       <!-- <li class="nav-item" *ngIf="showReaderBoard">
         <a href="/reader" class="nav-link" routerLink="reader">Reader Board</a>
       </li> -->
-      <li class="nav-item" *ngIf="showReaderBoard">
+      <!-- <li class="nav-item" *ngIf="showReaderBoard">
         <a href="/reader/books" class="nav-link" routerLink="reader/books">Subscribed Books</a>
-      </li>
+      </li> -->
       <!-- <li class="nav-item">
         <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
       </li> -->

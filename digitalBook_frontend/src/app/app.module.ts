@@ -28,6 +28,9 @@ import { AllMyBooksComponent } from './all-my-books/all-my-books.component';
 import { BoardReaderComponent } from './board-reader/board-reader.component';
 import { BoardAuthorComponent } from './board-author/board-author.component';
 import { ReaderBooksComponent } from './reader-books/reader-books.component';
+import { JobComponent } from './job/job.component';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +48,8 @@ import { ReaderBooksComponent } from './reader-books/reader-books.component';
     AllMyBooksComponent,
     BoardReaderComponent,
     BoardAuthorComponent,
-    ReaderBooksComponent
+    ReaderBooksComponent,
+    JobComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +61,8 @@ import { ReaderBooksComponent } from './reader-books/reader-books.component';
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRadioModule
   ],
   providers: [authInterceptorProviders,MatSnackBar,UserService],
   bootstrap: [AppComponent]

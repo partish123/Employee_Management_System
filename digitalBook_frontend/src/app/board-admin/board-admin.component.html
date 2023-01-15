@@ -1,5 +1,42 @@
-<div class="container">
+<!-- <div class="container">
   <header class="jumbotron">
     <p>{{ content }}</p>
   </header>
+</div> -->
+
+<div class="container">
+
+  <h2>List Of Users</h2>
+
+  <table style="width:100%">
+    <tr>
+      <th>User ID</th>
+      <th>First Name </th>
+      <th>Last Name </th>
+      <th>Email </th>
+      <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let user of userList">
+      <td>{{user.id}}</td>
+      <td>{{user.firstname}}</td>
+      <td>{{user.lastname}}</td>
+      <td>{{user.email}}</td>
+
+      <td><span>
+          <button style="margin-right: 10px;" (click)="doUpdate(user.id)" mat-raised-button
+            color="primary">Update</button>
+          <button style="margin-right: 10px;" (click)="doDelete(user.id)" mat-raised-button
+            color="primary">Delete</button>
+          <!-- <button *ngIf="book.active==true" (click)="doBlock(book.id)" mat-raised-button color="accent">Delete</button> -->
+          <!-- <button *ngIf="book.active==false" (click)="doUnBlock(book.id)" mat-raised-button
+              color="accent">Unblock</button> -->
+        </span>
+      </td>
+
+    </tr>
+
+  </table>
+
+
 </div>

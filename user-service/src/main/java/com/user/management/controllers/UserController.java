@@ -78,7 +78,7 @@ public class UserController {
 			Object message1 = userService.deleteUser(Long.parseLong(id));
 			Object message2 = userService.deleteEmployee(Long.parseLong(id));
 			if (message1 != null && message2!=null)
-				return ResponseEntity.status(200).body("User deleted successfully");
+			    return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
 			else
 				throw new UserException("User not deleted--->");
 
@@ -131,7 +131,7 @@ public class UserController {
 			System.out.println("Inside UserController getAllEmployees-");
 			Object allUsers = userService.getAllEmployees();
 			if (allUsers != null)
-				return ResponseEntity.status(200).body(allUsers);
+			    return new ResponseEntity<>(allUsers, HttpStatus.OK);
 			else
 				throw new UserException("Users not found--->");
 
@@ -149,7 +149,7 @@ public class UserController {
 			System.out.println("Inside UserController getEmployee-");
 			Object user = userService.getEmployeeById(id);
 			if (user != null)
-				return ResponseEntity.status(200).body(user);
+			    return new ResponseEntity<>(user, HttpStatus.OK);
 			else
 				throw new UserException("User not found---->");
 

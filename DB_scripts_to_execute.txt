@@ -1,0 +1,60 @@
+sign up
+{
+  "username": "striker",
+  "firstname": "Saiesh",
+  "lastname": "Mhamal",
+  "email": "saieshM@gmail.com",
+  "password": "saieshM@123"
+}
+
+{
+  "username": "terminator",
+  "firstname": "Shravan",
+  "lastname": "Sawant",
+  "email": "shravanS@gmail.com",
+  "password": "shravanS@123"
+}
+
+{
+email: "saiprasadnatekar@gmail.com"
+firstname: "Saiprasad"
+lastname: "Natekar"
+password: "saiPrasad@123"
+username: "terminator"
+}
+
+{
+username: ThunderBolt
+password: Partish@123
+}
+
+
+update
+{
+  "username": "rebellion",
+  "firstname": "raj",
+  "lastname": "sharma",
+  "email": "sharma785@gmail.com",
+  "role": [
+    "Admin"
+  ],
+  "password": "sharmaS@123"
+}
+
+{
+  "firstname": "Raj",
+  "lastname": "Sharma",
+  "email": "sharma785@gmail.com",
+  "role": [
+    "Developer"
+  ],
+}
+
+
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+INSERT INTO roles(name) VALUES('ROLE_MANAGER');
+INSERT INTO roles(name) VALUES('ROLE_ANALYST');
+INSERT INTO roles(name) VALUES('ROLE_DEVELOPER');
+INSERT INTO roles(name) VALUES('ROLE_TESTER');
+
+Insert into userdb.user_roles(user_id,role_id) values ('1','1');
