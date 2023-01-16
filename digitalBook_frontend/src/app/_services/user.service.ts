@@ -17,7 +17,7 @@ export class UserService {
   constructor(private http: HttpClient, private token: TokenStorageService) { }
 
   getAllUsers(): Observable<any> {
-    return this.http.get(`${API_URL}/getAllEmployees`);
+    return this.http.get(`${API_URL}/getAllUsers`);
   }
 
   updateUser(firstname: string, lastname: string, email: string, role: any, userID: any): Observable<any> {
@@ -32,6 +32,8 @@ export class UserService {
   deleteUser(userID:any) : Observable<any>{
     return this.http.delete(`${API_URL}/deleteUser/${userID}`, { responseType: 'text' });
   }
+
+
 
 
 

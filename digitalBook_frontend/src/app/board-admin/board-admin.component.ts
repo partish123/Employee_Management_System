@@ -19,8 +19,18 @@ export class BoardAdminComponent implements OnInit {
     firstname: '',
     lastname: '',
     email: '',
-    salary:''
+    roles:[],
+    isEdit: false
   };
+
+  updateuser: any = {  
+    firstname:'',
+    lastname:'',
+    email: '',
+    role:null
+  };
+
+  userRole: any | undefined;
 
   constructor(private userService: UserService,private snak: MatSnackBar,private router: Router) { }
 
@@ -29,8 +39,14 @@ export class BoardAdminComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       response => {
         this.isPresent = true;
-        console.log(response.body);
-        this.userList = response.body;
+        console.log(response);
+        this.userList = response;
+
+        this.userList.forEach(element => {
+          console.log(element.roles[0].name);
+          
+        });
+        
         this.snak.open("Users found", "OK");
       },
       error => {
@@ -40,24 +56,7 @@ export class BoardAdminComponent implements OnInit {
     )
   }
 
-  // onSubmit(): void {
-  //   const { username, email, password, role } = this.form;
-  //   let roles = [];
-  //   roles.push(role)
-  //   console.log(roles);
-  //   this.authService.register(username, email, password, roles).subscribe(
-  //     data => {
-  //       console.log(data);
-  //       this.isSuccessful = true;
-  //       this.isSignUpFailed = false;
-  //     },
-  //     err => {
-  //       this.errorMessage = err.error.message;
-  //       this.isSignUpFailed = true;
-  //       console.log(err.error.message);
-  //     }
-  //   );
-  // }
+
 
   doUpdate(userId:any):void{
     console.log("Updating user details with ID "+ userId.value);
@@ -83,6 +82,47 @@ export class BoardAdminComponent implements OnInit {
     )
 
    window.location.reload();
+
+  }
+
+
+  onEdit(item: any) {
+    this.userList.forEach(element => {
+      element.isEdit = false;
+    });
+    item.isEdit = true;
+  }
+
+
+  updateUserDetails(userId:any) {
+    debugger;
+    console.log("try to save form");
+    console.log("DATA ", this.user);
+
+    if (this.updateuser.firstname == '' || this.updateuser.lastname == '' || this.updateuser.email == '') {
+      this.snak.open("Fields can not be empty !!", "OK");
+      return;
+    }
+
+    const {firstname,email, lastname, role } = this.updateuser;
+    let roles = [];
+    roles.push(role)
+    console.log(roles);
+    
+
+    this.userService.updateUser(firstname,lastname,email,roles,userId).subscribe(
+      response => {
+        console.log(response);   
+        this.snak.open("Updated user details Successfully", "OK");
+        setTimeout(function () {
+          window.location.reload();
+        }, 4000);
+      },
+      error => {
+        console.log(error);
+        this.snak.open("ERROR!! ", "OK")
+      }
+    )
 
   }
 
