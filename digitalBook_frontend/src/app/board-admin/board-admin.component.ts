@@ -65,21 +65,25 @@ export class BoardAdminComponent implements OnInit {
   }
 
 
-  doDelete(id:any){
+  doDelete(userId:any){
     const block:any='Yes';
-    
-    // this.userService.blockOrUnblockBook(this.authorId,bookId,block).subscribe(
-    //   response => {
-    //     console.log(response);
-    //     this.snak.open("Book is blocked", "OK");
-    //     this.ngOnInit();
-    //   },
-    //   error => {
-    //     console.log(error);
-    //     this.ngOnInit();
-    //     this.snak.open("Book is blocked", "OK");
-    //   }
-    // )
+    console.log("Deleting user details with user ID "+ userId.value);
+
+    this.userService.deleteUser(userId).subscribe(
+      response => {
+        this.isPresent = true;
+        console.log(response.body);
+        
+        this.snak.open("User deleted", "OK");
+      },
+      error => {
+        console.log(error);
+        this.snak.open("User not deleted!! ", "OK");
+      }
+    )
+
+   window.location.reload();
+
   }
 
 

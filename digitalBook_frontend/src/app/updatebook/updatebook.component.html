@@ -21,15 +21,26 @@
             </mat-form-field>
 
             <mat-label>Select Role</mat-label> <br>
-            <!-- <input type="radio" name="role" value="Author" /> Developer
-            <input type="radio" name="role" value="Reader" /> Tester
-            <input type="radio" name="role" value="Reader" /> Analyst -->
+            <input type="radio" name="role"  [(ngModel)]="updateuser.role" value="Developer" /> Developer
+            <input type="radio" name="role" [(ngModel)]="updateuser.role" value="Tester" /> Tester
+            <input type="radio" name="role" [(ngModel)]="updateuser.role" value="Analyst" /> Analyst
 
-            <mat-radio-group aria-label="Select an option">
-                <mat-radio-button name="role" value="Developer" [(ngModel)]="updateuser.role">Developer </mat-radio-button><br>
-                <mat-radio-button name="role" value="Tester" [(ngModel)]="updateuser.role">Tester </mat-radio-button><br>
-                <mat-radio-button name="role" value="Analyst" [(ngModel)]="updateuser.role">Analyst</mat-radio-button>
+            <!-- <mat-radio-group aria-label="Select an option">
+                <mat-radio-button name="updateuser.role" value="Developer" [(ngModel)]="updateuser.role">Developer </mat-radio-button><br>
+                <mat-radio-button name="updateuser.role" [value]="Tester" [(ngModel)]="updateuser.role">Tester </mat-radio-button><br>
+                <mat-radio-button name="updateuser.role" [value]="Analyst" [(ngModel)]="updateuser.role">Analyst</mat-radio-button>
+            </mat-radio-group> -->
+
+
+            <!-- <label id="example-radio-group-label">Select Role</label><br>
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                [(ngModel)]="favoriteFruit">
+                <mat-radio-button class="example-radio-button" *ngFor="let fruit of fruits" [value]="fruit">
+                    {{ fruit }}
+                </mat-radio-button>
             </mat-radio-group>
+            <div>Your selected role is: {{ favoriteFruit }}</div> -->
+
 
 
 

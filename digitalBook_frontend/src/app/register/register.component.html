@@ -91,12 +91,15 @@
           [(ngModel)]="form.email"
           required
           email
-          pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          pattern="[A-Za-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,3}$"
           #email="ngModel"
         />
         <div class="alert-danger" *ngIf="email.errors && f.submitted">
           <div *ngIf="email.errors.required">Email is required</div>
           <div *ngIf="email.errors.email">
+            Email must be a valid email address
+          </div>
+          <div *ngIf="email.errors.pattern">
             Email must be a valid email address
           </div>
         </div>

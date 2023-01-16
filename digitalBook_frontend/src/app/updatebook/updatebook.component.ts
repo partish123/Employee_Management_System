@@ -13,13 +13,13 @@ import {MatRadioModule} from '@angular/material/radio';
 export class UpdatebookComponent implements OnInit {
 
   isUpdated = false;
-  
+ 
 
   updateuser: any = {  
     firstname:'',
     lastname:'',
     email: '',
-    role:''
+    role:null
   };
 
   userId: any | null = '';
@@ -27,7 +27,8 @@ export class UpdatebookComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private userService: UserService, private snak: MatSnackBar, private token: TokenStorageService) { }
 
-
+  // favoriteFruit: string | undefined;
+  // fruits: string[] = ['Developer', 'Tester', 'Analyst'];
 
   flag = false;
 
