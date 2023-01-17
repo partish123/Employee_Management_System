@@ -3,7 +3,6 @@ package com.job.management.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -52,4 +51,116 @@ public class Job {
     @Column(length = 20)
     private Status status;
 
+    @Column(name = "employee_id")
+    private Long employeeId;
+
+    public Job() {
+    }
+
+    public Job(String name, LocalDate jobCreatedDate, LocalDate jobUpdatedDate, LocalTime starttime, LocalTime endtime, double profitValue, String role, Status status, Long employeeId) {
+        this.name = name;
+        this.jobCreatedDate = jobCreatedDate;
+        this.jobUpdatedDate = jobUpdatedDate;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.profitValue = profitValue;
+        this.role = role;
+        this.status = status;
+        this.employeeId = employeeId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getJobCreatedDate() {
+        return jobCreatedDate;
+    }
+
+    public void setJobCreatedDate(LocalDate jobCreatedDate) {
+        this.jobCreatedDate = jobCreatedDate;
+    }
+
+    public LocalDate getJobUpdatedDate() {
+        return jobUpdatedDate;
+    }
+
+    public void setJobUpdatedDate(LocalDate jobUpdatedDate) {
+        this.jobUpdatedDate = jobUpdatedDate;
+    }
+
+    public LocalTime getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(LocalTime starttime) {
+        this.starttime = starttime;
+    }
+
+    public LocalTime getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(LocalTime endtime) {
+        this.endtime = endtime;
+    }
+
+    public double getProfitValue() {
+        return profitValue;
+    }
+
+    public void setProfitValue(double profitValue) {
+        this.profitValue = profitValue;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", jobCreatedDate=" + jobCreatedDate +
+                ", jobUpdatedDate=" + jobUpdatedDate +
+                ", starttime=" + starttime +
+                ", endtime=" + endtime +
+                ", profitValue=" + profitValue +
+                ", role='" + role + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
