@@ -1,15 +1,14 @@
 package com.job.management.repository;
 
+import com.job.management.model.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.job.management.model.Subscription;
 
 import java.util.List;
 
-public interface SubscriptionRepository extends JpaRepository<Subscription,Integer> {
-    List<Subscription> findByEmailId(String emailId);
-    List<Subscription> findByBookId(Integer bookId);
+public interface SubscriptionRepository extends JpaRepository<Job,Integer> {
+    List<Job> findByEmailId(String emailId);
+    List<Job> findByBookId(Integer bookId);
 
-    List<Subscription> findByReaderId(Integer readerId);
+    List<Job> findByReaderId(Integer readerId);
 
 }

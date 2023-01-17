@@ -4,13 +4,13 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class BookServiceApplicationTests {
+public class JobServiceApplicationTests {
 
 	@Test
 	public void contextLoads() {
 	}
 
-	public BookServiceApplicationTests(){
+	public JobServiceApplicationTests(){
 		
 	}
 

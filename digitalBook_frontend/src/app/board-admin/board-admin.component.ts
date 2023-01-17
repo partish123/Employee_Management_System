@@ -27,7 +27,7 @@ export class BoardAdminComponent implements OnInit {
     firstname:'',
     lastname:'',
     email: '',
-    role:null
+    role:''
   };
 
   userRole: any | undefined;
@@ -91,6 +91,10 @@ export class BoardAdminComponent implements OnInit {
       element.isEdit = false;
     });
     item.isEdit = true;
+    this.updateuser.firstname = item.firstname;
+    this.updateuser.lastname = item.lastname;
+    this.updateuser.email = item.email;
+    
   }
 
 

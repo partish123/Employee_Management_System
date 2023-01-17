@@ -1,13 +1,9 @@
 package com.job.management.payload;
 
-import org.springframework.beans.factory.annotation.Required;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Arrays;
 
-public class UpdateBookRequest {
+public class CreateJobRequest {
     @NotBlank
     @Size(max = 150)
     private String bookTitle;
@@ -24,7 +20,7 @@ public class UpdateBookRequest {
 
 
     private String image;
-    @NotNull
+
     boolean isActive;
 
     @NotBlank
@@ -38,7 +34,6 @@ public class UpdateBookRequest {
     public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
     }
-
 
     public String getCategory() {
         return category;
@@ -89,18 +84,19 @@ public class UpdateBookRequest {
     }
 
 
-    public UpdateBookRequest(String bookTitle, String category, double price, String publisher, String image, String bookcontent) {
+    public CreateJobRequest(String bookTitle, int bookCode, String category, double price, String publisher, String image, String bookContent) {
         this.bookTitle = bookTitle;
+
         this.category = category;
         this.price = price;
         this.publisher = publisher;
         this.image = image;
-        this.bookcontent = bookcontent;
+        this.bookcontent = bookContent;
     }
 
     @Override
     public String toString() {
-        return "UpdateBookRequest{" +
+        return "CreateBookRequest{" +
                 "bookTitle='" + bookTitle + '\'' +
                 ", category='" + category + '\'' +
                 ", price=" + price +

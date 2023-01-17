@@ -1,10 +1,10 @@
 package com.job.management.payload;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Arrays;
 
-public class CreateBookRequest {
+public class UpdateJobRequest {
     @NotBlank
     @Size(max = 150)
     private String bookTitle;
@@ -21,7 +21,7 @@ public class CreateBookRequest {
 
 
     private String image;
-
+    @NotNull
     boolean isActive;
 
     @NotBlank
@@ -35,6 +35,7 @@ public class CreateBookRequest {
     public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
     }
+
 
     public String getCategory() {
         return category;
@@ -85,19 +86,18 @@ public class CreateBookRequest {
     }
 
 
-    public CreateBookRequest(String bookTitle, int bookCode, String category, double price, String publisher, String image, String bookContent) {
+    public UpdateJobRequest(String bookTitle, String category, double price, String publisher, String image, String bookcontent) {
         this.bookTitle = bookTitle;
-
         this.category = category;
         this.price = price;
         this.publisher = publisher;
         this.image = image;
-        this.bookcontent = bookContent;
+        this.bookcontent = bookcontent;
     }
 
     @Override
     public String toString() {
-        return "CreateBookRequest{" +
+        return "UpdateBookRequest{" +
                 "bookTitle='" + bookTitle + '\'' +
                 ", category='" + category + '\'' +
                 ", price=" + price +

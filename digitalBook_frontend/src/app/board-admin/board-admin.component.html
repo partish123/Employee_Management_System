@@ -41,7 +41,7 @@
 
           <td>
             <div *ngIf="user.isEdit">
-              <input type="text" [(ngModel)]="updateuser.email" class="form-control" value=user.email/>
+              <input type="text" [(ngModel)]="updateuser.email" class="form-control"/>
             </div>
             <div *ngIf="!user.isEdit">
               {{user.email}}
@@ -51,29 +51,30 @@
 
           <td>
             <div *ngIf="user.isEdit">
-              <!-- <label for="updateuser.role">Select a role:</label>
-              
-              <select name="updateuser.role" id="updateuser.role">
-                <option [(ngModel)]="updateuser.role" value="Developer">Developer</option>
-                <option [(ngModel)]="updateuser.role" value="Tester">Tester</option>
-                <option [(ngModel)]="updateuser.role" value="Analyst">Analyst</option>
-              </select>
-              <input type="text" [(ngModel)]="updateuser.role" class="form-control"/> -->
 
-              <label>Select a role:
-                <input [(ngModel)]="updateuser.role"  list="roles" name="userRoles" /></label>
-                <datalist id="roles">
-                  <option value="Developer">
-                  <option value="Tester">
-                  <option value="Analyst">
-                </datalist>
+              <label for="role">Select a role:</label>              
+              <select name="role" id="role" [(ngModel)]="updateuser.role">
+                <option value="Developer">Developer</option>
+                <option value="Tester">Tester</option>
+                <option value="Analyst">Analyst</option>
+              </select>
+
+              <!-- <input type="text" [(ngModel)]="updateuser.role" class="form-control"/> -->
+
+              <!-- <label>Assign role:
+                <input [(ngModel)]="updateuser.role" list="roles" name="userRoles" /></label>
+              <datalist id="roles">
+                <option value="Developer">
+                <option value="Tester">
+                <option value="Analyst">
+              </datalist> -->
 
 
             </div>
             <div *ngIf="!user.isEdit">
               {{user.roles[0].name}}
             </div>
-            
+
 
           </td>
 
@@ -85,7 +86,7 @@
               </div>
               <div *ngIf="!user.isEdit">
                 <button class="btn btn-sm btn-success" (click)="onEdit(user)">Edit</button>
-                <button class="btn btn-sm btn-danger"(click)="doDelete(user.id)">Delete</button>
+                <button class="btn btn-sm btn-danger" (click)="doDelete(user.id)">Delete</button>
               </div>
 
 
@@ -98,13 +99,13 @@
               color="accent">Unblock</button> -->
             </span>
           </td>
-          {{ updateuser | json }}
+          
         </tr>
       </tbody>
-      
+
     </table>
 
-    
+    {{ updateuser | json }}
 
   </div>
 </div>
