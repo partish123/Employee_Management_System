@@ -4,26 +4,30 @@
 
         <form (ngSubmit)="doUpdateForm()">
 
-            <h1>Update User</h1>
+            <h1>Add Job</h1>
 
             <mat-form-field class="field" appearance="outline">
-                <mat-label>First Name</mat-label>
-                <input name="firstname" [(ngModel)]="updateuser.firstname" matInput placeholder="Enter First Name">
+                <mat-label>Job Name</mat-label>
+                <input name="name" [(ngModel)]="updateuser.name" matInput placeholder="Enter Job Name">
             </mat-form-field>
             <mat-form-field class="field" appearance="outline">
-                <mat-label>Last Name</mat-label>
-                <input name="lastname" [(ngModel)]="updateuser.lastname" matInput placeholder="Enter Last Name">
+                <mat-label>Start time</mat-label>
+                <input name="starttime" [(ngModel)]="updateuser.starttime" matInput placeholder="Enter Start time">
             </mat-form-field>
             <mat-form-field class="field" appearance="outline">
-                <mat-label>Email</mat-label>
-                <input name="email" type="email" [(ngModel)]="updateuser.email" email
-                    pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,3}$" matInput placeholder="Enter your email id">
+                <mat-label>End time</mat-label>
+                <input name="endtime" type="text" [(ngModel)]="updateuser.endtime" matInput placeholder="Enter End time">
+            </mat-form-field>
+
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Profit Value</mat-label>
+                <input name="profitValue" type="text" [(ngModel)]="updateuser.profitValue" matInput placeholder="Enter Profit Value">
             </mat-form-field>
 
             <mat-label>Select Role</mat-label> <br>
-            <input type="radio" name="role"  [(ngModel)]="updateuser.role" value="Developer" /> Developer
-            <input type="radio" name="role" [(ngModel)]="updateuser.role" value="Tester" /> Tester
-            <input type="radio" name="role" [(ngModel)]="updateuser.role" value="Analyst" /> Analyst
+            <input type="radio" name="role"  [(ngModel)]="updateuser.role"  value="Developer" /> Developer
+            <input type="radio" name="role" [(ngModel)]="updateuser.role"  value="Tester" /> Tester
+            <input type="radio" name="role" [(ngModel)]="updateuser.role"  value="Analyst" /> Analyst
 
             <!-- <mat-radio-group aria-label="Select an option">
                 <mat-radio-button name="updateuser.role" value="Developer" [(ngModel)]="updateuser.role">Developer </mat-radio-button><br>

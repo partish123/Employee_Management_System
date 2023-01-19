@@ -12,7 +12,7 @@ const API_URL: string = 'http://localhost:8085/api/user/manage';
 })
 export class UserService {
 
-
+  
 
   constructor(private http: HttpClient, private token: TokenStorageService) { }
 
@@ -33,6 +33,33 @@ export class UserService {
     return this.http.delete(`${API_URL}/deleteUser/${userID}`, { responseType: 'text' });
   }
 
+  addJob(name: string, starttime: string, endtime: string,profitValue: any,role: any): Observable<any> {
+    return this.http.post(`${API_URL}/createJob`, {
+      name,
+      starttime,
+      endtime,
+      profitValue,
+      role
+    }, { responseType: 'text' });
+  }
+
+  updateJob(name: string, starttime: string, endtime: string, profitValue:any ,role: any, jobID: any): Observable<any> {
+    return this.http.post(`${API_URL}/updateJob/${jobID}`, {
+      name,
+      starttime,
+      endtime,
+      profitValue,
+      role
+    }, { responseType: 'text' });
+  }
+
+  deleteJob(jobId:any) : Observable<any>{
+    return this.http.delete(`${API_URL}/deleteJob/${jobId}`, { responseType: 'text' });
+  }
+
+  getAllJobs(): Observable<any> {
+    return this.http.get(`${API_URL}/getAllJobs`);
+  }
 
 
 

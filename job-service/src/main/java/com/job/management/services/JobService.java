@@ -9,15 +9,25 @@ import com.job.management.utility.JobException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class JobService {
 
     @Autowired
     JobRepository jobRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    private static final String EMPLOYEE_URL = "http://localhost:8082/api/employee/manage";
 
     private static final Logger logger = LoggerFactory.getLogger(JobService.class);
 
@@ -30,8 +40,8 @@ public class JobService {
             job.setProfitValue(payload.getProfitValue());
             job.setStatus(Status.NOT_STARTED);
             job.setRole(payload.getRole());
-            job.setStarttime(payload.getStarttime());
-            job.setEndtime(payload.getEndtime());
+            job.setStarttime(LocalTime.parse(payload.getStarttime()));
+            job.setEndtime(LocalTime.parse(payload.getEndtime()));
 
             jobRepository.save(job);
             return new MessageResponse("Job added successfully");
@@ -55,10 +65,10 @@ public class JobService {
                 job.get().setRole(payload.getRole());
             }
             if(payload.getStarttime()!=null) {
-                job.get().setStarttime(payload.getStarttime());
+                job.get().setStarttime(LocalTime.parse(payload.getStarttime()));
             }
             if(payload.getEndtime()!=null) {
-                job.get().setEndtime(payload.getEndtime());
+                job.get().setEndtime(LocalTime.parse(payload.getEndtime()));
             }
             job.get().setJobUpdatedDate(LocalDate.now());
             jobRepository.save(job.get());
@@ -113,6 +123,86 @@ public class JobService {
 
         } catch (Exception e) {
             throw new JobException("Something went wrong. Please try after some time!");
+        }
+    }
+
+    public MessageResponse processJob(Long jobId, Long userId, String status,String role) throws  JobException{
+        logger.info("Inside JobService processJob----{}",jobId);
+        Optional<Job> job = jobRepository.findById(jobId);
+
+        if (job.isPresent() && job.get().getRole().equals(role)) {
+            if(status !=null && !status.isEmpty() && userId !=null) {
+                switch (status) {
+
+                    case "Allocate":
+                        if(job.get().getStatus()==Status.NOT_STARTED){
+                        List<Job> existingJob = jobRepository.findByEmployeeId(userId);
+                        if (!existingJob.isEmpty()) {
+                            boolean result = false;
+                            for (int i = 0; i < existingJob.size(); i++) {
+                                result = job.get().getStarttime().isBefore(existingJob.get(i).getEndtime());
+                                if (result) {
+                                    return new MessageResponse("Job can't be allocated due to time overlap");
+                                }
+                            }
+                            job.get().setJobStartTime(LocalTime.now());
+                            job.get().setStatus(Status.IN_PROGRESS);
+                            job.get().setEmployeeId(userId);
+                        } else {
+                            job.get().setJobStartTime(LocalTime.now());
+                            job.get().setStatus(Status.IN_PROGRESS);
+                            job.get().setEmployeeId(userId);
+                        }
+                        }
+                        else{
+                            return new MessageResponse("Job can't be allocated as its already in progress or aborted");
+                        }
+                        break;
+
+                    case "Abort":
+                        if(job.get().getStatus().equals(Status.IN_PROGRESS)){
+                            LocalTime time = job.get().getJobStartTime();
+                            LocalTime presentTime = LocalTime.now();
+                            long value= time.until(presentTime, ChronoUnit.MINUTES);
+                            System.out.println("The time difference in minutes is"+ value);
+                            if(value < 15) {
+                                job.get().setStatus(Status.NOT_STARTED);
+                                job.get().setEmployeeId(null);
+                            }
+                            else{
+                                job.get().setStatus(Status.ABORTED);
+                                job.get().setEmployeeId(null);
+                            }
+                        }
+                        else{
+                            return new MessageResponse("Job can't be aborted");
+                        }
+
+                        break;
+
+                    case "Complete":
+                        if(job.get().getStatus().equals(Status.IN_PROGRESS)) {
+                            job.get().setStatus(Status.COMPLETED);
+                            String url = "/updateSalary/"+userId+"/"+job.get().getProfitValue();
+                            System.out.println(url);
+                            String result = restTemplate.getForObject(EMPLOYEE_URL + url,String.class);
+                            assert result != null;
+                            job.get().setEmployeeId(null);
+                        }
+                        else{
+                            return new MessageResponse("Job can't be completed");
+                        }
+                        break;
+
+
+                }
+            }
+
+
+            jobRepository.save(job.get());
+            return new MessageResponse("Job processed successfully");
+        } else {
+            throw new JobException("Job not processed...either selected job not available or your role is not applicable!");
         }
     }
 

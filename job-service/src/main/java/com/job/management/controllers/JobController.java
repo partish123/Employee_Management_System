@@ -2,7 +2,6 @@ package com.job.management.controllers;
 
 import com.job.management.payload.JobRequestPayload;
 import com.job.management.payload.MessageResponse;
-import com.job.management.repository.JobRepository;
 import com.job.management.services.JobService;
 import com.job.management.utility.JobException;
 import org.slf4j.Logger;
@@ -17,11 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/job/manage")
 @CrossOrigin
 public class JobController {
-    @Autowired
-    private JobService service;
 
     @Autowired
-    private JobRepository jobRepository;
+    JobService jobService;
 
     private static final Logger logger = LoggerFactory.getLogger(JobController.class);
 
@@ -30,7 +27,7 @@ public class JobController {
     public ResponseEntity<String> createJob(@RequestBody JobRequestPayload payload) throws JobException {
         try {
             logger.info("Inside JobController createJob---{}",payload);
-            MessageResponse m = service.createJob(payload);
+            MessageResponse m = jobService.createJob(payload);
             logger.info(m.getMessage());
             return new ResponseEntity<>("Job added successfully!", HttpStatus.CREATED);
         }catch (Exception e){
@@ -39,11 +36,11 @@ public class JobController {
     }
 
 
-    @PutMapping("/updateJob/{id}")
+    @PostMapping("/updateJob/{id}")
     public ResponseEntity<String> updateJob(@RequestBody JobRequestPayload payload, @PathVariable String id) throws JobException {
         try {
             logger.info("Inside JobController updateJob---{}",payload);
-            MessageResponse m = service.updateJob(payload,Long.parseLong(id));
+            MessageResponse m = jobService.updateJob(payload,Long.parseLong(id));
             logger.info(m.getMessage());
             return new ResponseEntity<>("Job updated successfully!", HttpStatus.OK);
         }catch (Exception e){
@@ -55,7 +52,7 @@ public class JobController {
     public ResponseEntity<String> deleteJob(@PathVariable String id) throws JobException {
         try {
             logger.info("Inside JobController deleteJob---");
-            MessageResponse m = service.deleteJob(Long.parseLong(id));
+            MessageResponse m = jobService.deleteJob(Long.parseLong(id));
             logger.info("Message---{}",m);
             return new ResponseEntity<>("Job deleted successfully!",HttpStatus.OK);
         }catch (Exception e){
@@ -63,11 +60,11 @@ public class JobController {
         }
     }
 
-    @GetMapping("/getAllEmployees")
+    @GetMapping("/getAllJobs")
     public ResponseEntity<?> getAllJobs() throws JobException {
         try {
             logger.info("Inside JobController getAllJobs---");
-            Object jobList = service.getAllJobs();
+            Object jobList = jobService.getAllJobs();
             logger.info("jobList----{}",jobList);
             if(jobList!=null)
                 return new ResponseEntity<>(jobList,HttpStatus.OK);
@@ -78,14 +75,14 @@ public class JobController {
         }
     }
 
-    @GetMapping("/getEmployee/{id}")
+    @GetMapping("/getJob/{id}")
     public ResponseEntity<?> getJob(@PathVariable String id) throws JobException {
         try {
             logger.info("Inside JobController getJob---");
-            Object employee = service.getJob(Long.parseLong(id));
-            logger.info("job----{}",employee);
-            if(employee!=null)
-                return new ResponseEntity<>(employee,HttpStatus.OK);
+            Object job = jobService.getJob(Long.parseLong(id));
+            logger.info("job----{}",job);
+            if(job!=null)
+                return new ResponseEntity<>(job,HttpStatus.OK);
             else
                 return ResponseEntity.status(500).body("Failed to retrieve job!");
         }catch (Exception e){
@@ -93,6 +90,17 @@ public class JobController {
         }
     }
 
+    @GetMapping("/processJob/{jobId}/{userId}/{status}/{role}")
+    public ResponseEntity<String> processJob(@PathVariable String jobId, @PathVariable String userId,@PathVariable String status,@PathVariable String role) throws JobException {
+        try {
+            logger.info("Inside JobController processJob---{}",jobId);
+            MessageResponse m = jobService.processJob(Long.parseLong(jobId),Long.parseLong(userId),status,role);
+            logger.info(m.getMessage());
+            return new ResponseEntity<>(m.getMessage(), HttpStatus.OK);
+        }catch (Exception e){
+            throw new JobException("Job not processed...either selected job not available or your role is not applicable!",e);
+        }
+    }
 
 
 

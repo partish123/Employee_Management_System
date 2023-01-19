@@ -103,6 +103,17 @@ public class EmployeeController {
         }
     }
 
+    @GetMapping("/updateSalary/{empId}/{salary}")
+    public ResponseEntity<String> updateSalary(@PathVariable String empId, @PathVariable String salary) throws EmployeeException {
+        try {
+            logger.info("Inside EmployeeController updateSalary---");
+            MessageResponse m = service.updateSalary(Long.parseLong(empId),Double.parseDouble(salary));
+            logger.info(m.getMessage());
+            return new ResponseEntity<>("Employee salary updated successfully!",HttpStatus.CREATED);
+        }catch (Exception e){
+            throw new EmployeeException("Sorry something went wrong in update employee",e);
+        }
+    }
 
 
 

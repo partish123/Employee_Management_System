@@ -3,6 +3,8 @@ package com.user.management.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+
+import com.user.management.payload.request.JobRequestPayload;
 import com.user.management.payload.request.SignupRequest;
 import com.user.management.payload.request.UpdateUserDetails;
 import com.user.management.payload.response.MessageResponse;
@@ -21,6 +23,8 @@ import java.util.List;
 public class RestApiCall {
 
     private static final String EMPLOYEE_URL = "http://localhost:8082/api/employee/manage";
+
+    private static final String JOB_URL = "http://localhost:8083/api/job/manage";
     private static final Logger logger = LoggerFactory.getLogger(RestApiCall.class);
 
     @Autowired
@@ -71,5 +75,41 @@ public class RestApiCall {
 	}
 
 
+    public ResponseEntity<String> createJob(String url, JobRequestPayload payload) {
+        String result = restTemplate.postForObject(JOB_URL+url,payload, String.class);
+        logger.debug(result);
+        assert result != null;
+        return ResponseEntity.ok(result);
+    }
+
+    public ResponseEntity<String> updateJob(String url, JobRequestPayload payload) {
+        String result = restTemplate.postForObject(JOB_URL+url,payload, String.class);
+        logger.debug(result);
+        assert result != null;
+        return ResponseEntity.ok(result);
+    }
+
+    public ResponseEntity<Object> getAllJobs(String url) {
+        logger.info("Inside RestAPICall getAllJobs----{}",url);
+        Object result = restTemplate.getForObject(JOB_URL+url,List.class);
+        assert result != null;
+        return ResponseEntity.ok(result);
+    }
+
+    public ResponseEntity<MessageResponse> deleteJob(String url) {
+        logger.info("Inside RestAPICall deleteJob----{}",url);
+        restTemplate.delete(JOB_URL+url);
+        return ResponseEntity.ok(new MessageResponse("Job deleted"));
+    }
+
+
+
+
+    public ResponseEntity<String> processJob(String url) {
+        logger.info("Inside RestAPICall processJob----{}",url);
+        String result = restTemplate.getForObject(JOB_URL+url,String.class);
+        assert result != null;
+        return ResponseEntity.ok(result);
+    }
 
 }

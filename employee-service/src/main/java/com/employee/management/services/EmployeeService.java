@@ -110,10 +110,25 @@ public class EmployeeService {
 			throw new EmployeeException("Something went wrong. Please try after some time!");
 		}
 	}
-	
-	
-	
 
 
-
+	public MessageResponse updateSalary(long empId, double salary) throws  EmployeeException{
+		logger.info("Inside EmployeeService updateSalary----{}",empId);
+		Optional<Employee> employee = employeeRepository.findById(empId);
+		double totalSalary=0;
+		if (employee.isPresent()) {
+			if(employee.get().getSalary()!=0){
+                 double presentSalary = employee.get().getSalary();
+				 totalSalary  = salary + presentSalary;
+				 employee.get().setSalary(totalSalary);
+			}
+			else{
+				employee.get().setSalary(salary);
+			}
+			employeeRepository.save(employee.get());
+			return new MessageResponse("Employee salary updated successfully");
+		} else {
+			throw new EmployeeException("Something went wrong.. Please try after some time!");
+		}
+	}
 }

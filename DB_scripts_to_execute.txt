@@ -52,6 +52,16 @@ update
 }
 
 
+Create Job Payload
+{
+  "name": "JOB1",
+  "starttime": [11,15],
+  "endtime": [12,15],
+  "profitValue": 200,
+  "role": "Tester"
+}
+
+
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 INSERT INTO roles(name) VALUES('ROLE_MANAGER');
 INSERT INTO roles(name) VALUES('ROLE_ANALYST');

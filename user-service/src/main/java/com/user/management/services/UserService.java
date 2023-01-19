@@ -1,8 +1,8 @@
 package com.user.management.services;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.user.management.models.*;
+import com.user.management.payload.request.JobRequestPayload;
 import com.user.management.payload.request.SignupRequest;
 import com.user.management.payload.request.UpdateUserDetails;
 import com.user.management.payload.response.MessageResponse;
@@ -10,17 +10,16 @@ import com.user.management.repository.RoleRepository;
 import com.user.management.repository.UserRepository;
 import com.user.management.utility.UserException;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.*;
-
-import javax.validation.Valid;
 
 @Service
 public class UserService {
@@ -46,13 +45,13 @@ public class UserService {
 
 			if(user.isPresent()) {
 
-				if (userRepository.existsByUsername(userDetails.getUsername())) {
-					return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-				}
-
-				if (userRepository.existsByEmail(userDetails.getEmail())) {
-					return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-				}
+//				if (userRepository.existsByUsername(userDetails.getUsername())) {
+//					return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+//				}
+//
+//				if (userRepository.existsByEmail(userDetails.getEmail())) {
+//					return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+//				}
 
 				if (Objects.equals(user.get().getId(), id)) {
 					if (userDetails.getUsername() != null && !userDetails.getUsername().isEmpty()) {
@@ -232,10 +231,124 @@ public class UserService {
 	}
 
 
-	
+	public ResponseEntity<String> createJob(JobRequestPayload payload) throws UserException{
+		logger.info("Inside UserService createJob----{}",payload);
 
-	
+		Set<String> strRoles = Collections.singleton(payload.getRole());
+
+
+		strRoles.forEach(role -> {
+			switch (role) {
+
+				case "Developer":
+					Optional<Role> devRole = roleRepository.findByName(ERole.ROLE_DEVELOPER);
+					if(devRole.isPresent()) {
+						payload.setRole(String.valueOf(ERole.ROLE_DEVELOPER));
+					}
+					break;
+
+				case "Tester":
+					Optional<Role> testerRole = roleRepository.findByName(ERole.ROLE_TESTER);
+						if(testerRole.isPresent()) {
+							payload.setRole(String.valueOf(ERole.ROLE_TESTER));
+						}
+					break;
+
+				case "Analyst":
+					Optional<Role> analystRole = roleRepository.findByName(ERole.ROLE_ANALYST);
+							if(analystRole.isPresent()) {
+								payload.setRole(String.valueOf(ERole.ROLE_ANALYST));
+							}
+					break;
+
+
+			}
+		});
+
+
+		logger.info("Inside UserService createJob...after payload role change----{}",payload);
+
+		ResponseEntity<String> savedJob = restClient.createJob("/createJob", payload);
+		if (savedJob != null) {
+			return savedJob;
+		} else {
+			throw new UserException("Something went wrong.. Please try after some time!");
+		}
+	}
+
+	public ResponseEntity<String> updateJob(JobRequestPayload payload,Long id) throws UserException {
+		System.out.println("Inside UserService updateJob---{}"+ payload);
+
+		Set<String> strRoles = Collections.singleton(payload.getRole());
+
+
+		strRoles.forEach(role -> {
+			switch (role) {
+
+				case "Developer":
+					Optional<Role> devRole = roleRepository.findByName(ERole.ROLE_DEVELOPER);
+					if(devRole.isPresent()) {
+						payload.setRole(String.valueOf(ERole.ROLE_DEVELOPER));
+					}
+					break;
+
+				case "Tester":
+					Optional<Role> testerRole = roleRepository.findByName(ERole.ROLE_TESTER);
+					if(testerRole.isPresent()) {
+						payload.setRole(String.valueOf(ERole.ROLE_TESTER));
+					}
+					break;
+
+				case "Analyst":
+					Optional<Role> analystRole = roleRepository.findByName(ERole.ROLE_ANALYST);
+					if(analystRole.isPresent()) {
+						payload.setRole(String.valueOf(ERole.ROLE_ANALYST));
+					}
+					break;
+
+
+			}
+		});
+
+		logger.info("Inside UserService updateJob...after payload role change----{}",payload);
 
 
 
+		ResponseEntity<String> updateJob = restClient.updateJob("/updateJob/" + id , payload);
+		if (updateJob != null) {
+			return updateJob;
+		} else {
+			throw new UserException("Something went wrong.. Please try after some time!");
+		}
+
+	}
+
+
+	public Object getAllJobs() throws UserException {
+		logger.info("Inside UserService getAllJobs----");
+		ResponseEntity<Object> jobList = restClient.getAllJobs("/getAllJobs");
+		logger.info("List of jobs----{}",jobList.getBody());
+		if (jobList != null) {
+			return jobList;
+		} else {
+			throw new UserException("Something went wrong.. Please try after some time!");
+		}
+	}
+
+	public Object deleteJob(Long id) throws UserException {
+		logger.info("Inside UserService deleteJob----{}",id);
+		return restClient.deleteJob("/deleteJob/"+id);
+
+	}
+
+
+	public ResponseEntity<String> processJob(String jobId, String userId,String status,String role) throws UserException {
+		System.out.println("Inside UserService processJob---{}"+ jobId);
+		ResponseEntity<String> processJob = restClient.processJob("/processJob/" + jobId + "/"+ userId + "/"+ status + "/" + role);
+		if (processJob != null) {
+			return processJob;
+		} else {
+			throw new UserException("Job not processed...either selected job not available or your role is not applicable!");
+		}
+	}
 }

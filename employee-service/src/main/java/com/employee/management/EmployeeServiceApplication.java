@@ -12,9 +12,9 @@ public class EmployeeServiceApplication {
 		SpringApplication.run(EmployeeServiceApplication.class, args);
 	}
 
-//	@Bean
-//	public RestTemplate getRestTemplate() {
-//		return new RestTemplate();
-//	}
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+	}
 
 }

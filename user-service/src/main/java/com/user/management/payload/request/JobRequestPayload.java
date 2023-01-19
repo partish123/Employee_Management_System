@@ -1,4 +1,4 @@
-package com.job.management.payload;
+package com.user.management.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,11 +11,11 @@ public class JobRequestPayload {
     @Size(max = 20)
     private String name;
 
-//    @JsonFormat(pattern = "HH:mm")
+//    @JsonFormat(pattern = "HH:mm:ss")
     @NotBlank
     private String starttime;
 
-//    @JsonFormat(pattern = "HH:mm")
+//    @JsonFormat(pattern = "HH:mm:ss")
     @NotBlank
     private String endtime;
 

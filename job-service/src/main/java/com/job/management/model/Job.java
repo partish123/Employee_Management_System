@@ -54,6 +54,9 @@ public class Job {
     @Column(name = "employee_id")
     private Long employeeId;
 
+    @Column(name="job_start_time")
+    private LocalTime jobStartTime;
+
     public Job() {
     }
 
@@ -147,6 +150,14 @@ public class Job {
 
     public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public LocalTime getJobStartTime() {
+        return jobStartTime;
+    }
+
+    public void setJobStartTime(LocalTime jobStartTime) {
+        this.jobStartTime = jobStartTime;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.user.management.controllers;
 
+import com.user.management.payload.request.JobRequestPayload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +48,9 @@ public class UserController {
 
 	@Autowired
 	PasswordEncoder encoder;
+
+
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
 	@PostMapping(value = "/updateUser/{id}")
@@ -157,6 +163,87 @@ public class UserController {
 			throw new UserException("User not found..got error--->", e);
 		}
 	}
+
+
+	@PostMapping("/createJob")
+	public ResponseEntity<String> createJob(@RequestBody JobRequestPayload payload) throws UserException {
+		try {
+			logger.info("Inside UserController createJob---{}",payload);
+			ResponseEntity<String> m = userService.createJob(payload);
+			logger.info(m.getBody());
+			return new ResponseEntity<>("Job added successfully!", HttpStatus.CREATED);
+		}catch (Exception e){
+			throw new UserException("Sorry something went wrong in create job ",e);
+		}
+	}
+
+	@PostMapping("/updateJob/{id}")
+	public ResponseEntity<String> updateJob(@RequestBody JobRequestPayload payload,@PathVariable String id) throws UserException {
+		try {
+			logger.info("Inside UserController updateJob---{}",payload);
+			ResponseEntity<String> m = userService.updateJob(payload,Long.parseLong(id));
+			logger.info(m.getBody());
+			return new ResponseEntity<>("Job updated successfully!", HttpStatus.OK);
+		}catch (Exception e){
+			throw new UserException("Sorry something went wrong in update job ",e);
+		}
+	}
+
+
+	@GetMapping(value = "/getAllJobs")
+//	@PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+	public ResponseEntity<?> getAllJobs() throws UserException {
+
+		try {
+			System.out.println("Inside UserController getAllJobs-");
+			Object allJobs = userService.getAllJobs();
+			if (allJobs != null)
+				return new ResponseEntity<>(allJobs, HttpStatus.OK);
+			else
+				throw new UserException("Jobs not found--->");
+
+		} catch (Exception e) {
+			throw new UserException("Jobs not found..got error--->", e);
+		}
+	}
+
+
+	@DeleteMapping(value = "/deleteJob/{id}")
+//	@PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+	public ResponseEntity<?> deleteJob(@PathVariable String id) throws UserException {
+
+		try {
+			System.out.println("Inside UserController deleteJob-");
+
+			Object message = userService.deleteJob(Long.parseLong(id));
+			if (message != null)
+				return new ResponseEntity<>("Job deleted successfully", HttpStatus.OK);
+			else
+				throw new UserException("Job not deleted--->");
+
+		} catch (Exception e) {
+			throw new UserException("Job is not deleted..got error--->", e);
+		}
+	}
+
+
+	@GetMapping("/processJob/{jobId}/{userId}/{status}/{role}")
+	public ResponseEntity<String> processJob(@PathVariable String jobId,@PathVariable String userId,@PathVariable String status,@PathVariable String role) throws UserException {
+		try {
+			logger.info("Inside UserController processJob---{}",jobId);
+			ResponseEntity<String> m = userService.processJob(jobId,userId,status,role);
+			logger.info(m.getBody());
+			return new ResponseEntity<>(m.getBody(), HttpStatus.OK);
+		}catch (Exception e){
+			throw new UserException("Job not processed...either selected job not available or your role is not applicable!",e);
+		}
+	}
+
+
+
+
+
+
 
 
 

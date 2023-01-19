@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'read', component: BoardReaderComponent },
   { path: 'author/books', component: AllMyBooksComponent },
   { path: 'reader/books', component: ReaderBooksComponent },
-  { path: 'update', component: UpdatebookComponent },
+  { path: 'add', component: UpdatebookComponent },
   { path: 'reader', component: BoardReaderComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
