@@ -130,7 +130,7 @@ public class JobService {
         logger.info("Inside JobService processJob----{}",jobId);
         Optional<Job> job = jobRepository.findById(jobId);
 
-        if (job.isPresent() && job.get().getRole().equals(role)) {
+        if (job.isPresent() && role!=null && !role.isEmpty() && job.get().getRole().equals(role)) {
             if(status !=null && !status.isEmpty() && userId !=null) {
                 switch (status) {
 
@@ -202,7 +202,7 @@ public class JobService {
             jobRepository.save(job.get());
             return new MessageResponse("Job processed successfully");
         } else {
-            throw new JobException("Job not processed...either selected job not available or your role is not applicable!");
+            throw new JobException("Job not processed...either selected job not available or your role is not applicable or your not having any role assigned!");
         }
     }
 

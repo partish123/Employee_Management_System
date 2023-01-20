@@ -3,7 +3,8 @@
 
         <h2>List Of Available Jobs</h2>
 
-        <button style="position: relative;" class="btn btn-sm btn-success" (click)="doAddJob()">Add Job</button><br>
+        <button *ngIf="showAdmin" style="position: relative;" class="btn btn-sm btn-success" (click)="doAddJob()">Add
+            Job</button><br>
 
         <br>
 
@@ -94,15 +95,31 @@
 
                     <td style="width: 15%;" class="text-center">
                         <span>
+                            <!-- controls for admin role -->
                             <div *ngIf="job.isEdit">
                                 <button class="btn btn-sm btn-success"
                                     (click)="updateUserDetails(job.id)">Update</button>
                                 <button class="btn btn-sm btn-danger" (click)="job.isEdit = false">Cancel</button>
                             </div>
-                            <div *ngIf="!job.isEdit">
+                            <div *ngIf="!job.isEdit && showAdmin">
                                 <button class="btn btn-sm btn-success" (click)="onEdit(job)">Edit</button>
                                 <button class="btn btn-sm btn-danger" (click)="doDelete(job.id)">Delete</button>
                             </div>
+
+
+                            <!-- controls for user role -->
+
+                            <div *ngIf="job.isPresent">
+                                <button class="btn btn-sm btn-success" (click)="onComplete(job)">Complete</button>
+                                <button class="btn btn-sm btn-danger" (click)="onAbort(job)">Abort</button>
+                            </div>
+                            <div *ngIf="!job.isPresent && !showAdmin">
+                                <button class="btn btn-sm btn-success" (click)="onAllocate(job)">Allocate</button>
+
+                            </div>
+
+
+
 
 
                             <!-- <button style="margin-right: 10px;" (click)="doUpdate(user.id)" mat-raised-button

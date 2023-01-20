@@ -8,7 +8,7 @@
       <li class="nav-item" *ngIf="showAdminBoard">
         <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
       </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
+      <li class="nav-item" *ngIf="isLoggedIn && roles?.length">
         <a href="/jobs" class="nav-link" routerLink="jobs">Jobs</a>
       </li>
       <li class="nav-item" *ngIf="showManagerBoard">

@@ -11,9 +11,7 @@ const API_URL: string = 'http://localhost:8085/api/user/manage';
   providedIn: 'root'
 })
 export class UserService {
-
   
-
   constructor(private http: HttpClient, private token: TokenStorageService) { }
 
   getAllUsers(): Observable<any> {
@@ -59,6 +57,19 @@ export class UserService {
 
   getAllJobs(): Observable<any> {
     return this.http.get(`${API_URL}/getAllJobs`);
+  }
+
+
+  allocateJob(userid: any, jobid: any, role: any, status: string) {
+    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`);
+  }
+
+  abortJob(userid: any, jobid: any, role: any, status: string) {
+    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`);
+  }
+
+  completeJob(userid: any, jobid: any, role: any, status: string) {
+    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`);
   }
 
 
