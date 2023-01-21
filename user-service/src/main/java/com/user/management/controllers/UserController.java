@@ -228,11 +228,11 @@ public class UserController {
 
 
 	@GetMapping("/processJob/{jobId}/{userId}/{status}/{role}")
-	public ResponseEntity<String> processJob(@PathVariable String jobId,@PathVariable String userId,@PathVariable String status,@PathVariable String role) throws UserException {
+	public ResponseEntity<?> processJob(@PathVariable String jobId,@PathVariable String userId,@PathVariable String status,@PathVariable String role) throws UserException {
 		try {
 			logger.info("Inside UserController processJob---{}",jobId);
-			ResponseEntity<String> m = userService.processJob(jobId,userId,status,role);
-			logger.info(m.getBody());
+			ResponseEntity<?> m = userService.processJob(jobId,userId,status,role);
+			logger.info((String) m.getBody());
 			return new ResponseEntity<>(m.getBody(), HttpStatus.OK);
 		}catch (Exception e){
 			throw new UserException("Job not processed...either selected job not available or your role is not applicable!",e);

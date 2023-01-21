@@ -165,7 +165,7 @@ public class JobService {
                             LocalTime presentTime = LocalTime.now();
                             long value= time.until(presentTime, ChronoUnit.MINUTES);
                             System.out.println("The time difference in minutes is"+ value);
-                            if(value < 15) {
+                            if(value < 20) {
                                 job.get().setStatus(Status.NOT_STARTED);
                                 job.get().setEmployeeId(null);
                             }
@@ -188,6 +188,7 @@ public class JobService {
                             String result = restTemplate.getForObject(EMPLOYEE_URL + url,String.class);
                             assert result != null;
                             job.get().setEmployeeId(null);
+
                         }
                         else{
                             return new MessageResponse("Job can't be completed");
@@ -200,9 +201,10 @@ public class JobService {
 
 
             jobRepository.save(job.get());
-            return new MessageResponse("Job processed successfully");
+
+            return new MessageResponse("Job "+ status +" done");
         } else {
-            throw new JobException("Job not processed...either selected job not available or your role is not applicable or your not having any role assigned!");
+            throw new JobException("Job not processed...Your role is not applicable for this job!");
         }
     }
 

@@ -13,6 +13,7 @@ export class BoardAdminComponent implements OnInit {
 
   isPresent = false;
   userList:any[] = [];
+  sortedUserList:any[]=[];
 
   user: any = {
     id: '',
@@ -23,6 +24,14 @@ export class BoardAdminComponent implements OnInit {
     isEdit: false
   };
 
+  // employee: any = {
+  //   // id: '',
+  //   // firstname: '',
+  //   // lastname: '',
+  //   // email: '',
+  //   salary:''
+  // };
+
   updateuser: any = {  
     firstname:'',
     lastname:'',
@@ -31,6 +40,8 @@ export class BoardAdminComponent implements OnInit {
   };
 
   userRole: any | undefined;
+  employeeList:any[] = [];
+  salary:any[]=[];
 
   constructor(private userService: UserService,private snak: MatSnackBar,private router: Router) { }
 
@@ -44,6 +55,10 @@ export class BoardAdminComponent implements OnInit {
 
         this.userList.forEach(element => {
           console.log(element.roles[0].name);
+
+          if(element.roles[0].name !== 'ROLE_ADMIN'){
+            this.sortedUserList.push(element);
+          }
           
         });
         
@@ -54,6 +69,29 @@ export class BoardAdminComponent implements OnInit {
         this.snak.open("No Users found!! ", "OK");
       }
     )
+
+    this.userService.getAllEmployees().subscribe(
+      response => {
+        this.isPresent = true;
+        console.log(response.body);
+        this.employeeList = response.body;    
+        this.employeeList.forEach(element => {
+          console.log(element.salary);
+          this.salary.push(element.salary);
+          console.log(this.salary);
+          console.log(this.salary.length);
+          
+        });
+
+        this.snak.open("Employees found", "OK");
+      },
+      error => {
+        console.log(error);
+        this.snak.open("No employees found!! ", "OK");
+      }
+    )
+
+
   }
 
 

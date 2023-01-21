@@ -342,9 +342,9 @@ public class UserService {
 	}
 
 
-	public ResponseEntity<String> processJob(String jobId, String userId,String status,String role) throws UserException {
+	public ResponseEntity<?> processJob(String jobId, String userId,String status,String role) throws UserException {
 		System.out.println("Inside UserService processJob---{}"+ jobId);
-		ResponseEntity<String> processJob = restClient.processJob("/processJob/" + jobId + "/"+ userId + "/"+ status + "/" + role);
+		ResponseEntity<?> processJob = restClient.processJob("/processJob/" + jobId + "/"+ userId + "/"+ status + "/" + role);
 		if (processJob != null) {
 			return processJob;
 		} else {

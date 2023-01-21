@@ -1,3 +1,4 @@
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -13,85 +14,110 @@ export class JobComponent implements OnInit {
 
   content?: string;
 
-  
-  jobList:any[] = [];
+
+  jobList: any[] = [];
+  sortedList: any[] = [];
 
   job: any = {
     id: '',
     name: '',
     jobCreatedDate: '',
     jobUpdatedDate: '',
-    starttime:'',
-    endtime:'',
-    profitValue:'',
-    role:'',
-    status:'',
-    employeeId:'',
-    jobStartTime:'',
+    starttime: '',
+    endtime: '',
+    profitValue: '',
+    role: '',
+    status: '',
+    employeeId: '',
+    jobStartTime: '',
     isEdit: false,
     isPresent: false
   };
 
 
-  updatejob: any = {  
-    name:'',
-    starttime:'',
+  updatejob: any = {
+    name: '',
+    starttime: '',
     endtime: '',
-    profitValue:'',
-    role:''
+    profitValue: '',
+    role: ''
   };
 
   userRole: any | undefined;
   private roles: string[] = [];
-  showAdmin: boolean= false;
+  showAdmin: boolean = false;
   currentUser: any;
+  empId: any;
 
-  constructor(private userService: UserService,private snak: MatSnackBar,private router: Router,private token: TokenStorageService) { }
+  constructor(private userService: UserService, private snak: MatSnackBar, private router: Router, private token: TokenStorageService) { }
 
   ngOnInit(): void {
-    
+
     const user = this.token.getUser();
     this.roles = user.roles;
     this.showAdmin = this.roles.includes('ROLE_ADMIN');
+    this.empId = user.id;
+
+    if (this.showAdmin) {
+      this.userService.getAllJobs().subscribe(
+        response => {
+
+          console.log(response.body);
+          this.sortedList = response.body;
+          this.snak.open("Available Jobs fetched", "OK");
+        },
+        err => {
+          console.log(err.error.message);
+          this.snak.open("No Jobs found!! ", "OK");
+        }
+      )
+    }
+    else {
+      this.userService.getAllJobs().subscribe(
+        response => {
+
+          console.log(response.body);
+          this.jobList = response.body;
+
+          this.jobList.forEach(element => {
+
+            console.log(element['status']);
+            if (element['status'] === 'NOT_STARTED' || element['status'] === 'IN_PROGRESS') {
+              this.sortedList.push(element);
+            }
+            console.log(this.sortedList);
+          });
+
+          this.snak.open("Available Jobs fetched", "OK");
+        },
+        err => {
+          console.log(err.error.message);
+          this.snak.open("No Jobs found!! ", "OK");
+        }
+      )
+
+    }
 
 
-    this.userService.getAllJobs().subscribe(
-      response => {
-        
-        console.log(response.body);
-        this.jobList = response.body;
-
-        // this.jobList.forEach(element => {
-        //   console.log(element.roles[0].name);
-          
-        // });
-        
-        this.snak.open("Available Jobs fetched", "OK");
-      },
-      err => {
-        console.log(err.error.message);
-        this.snak.open("No Jobs found!! ", "OK");
-      }
-    )
   }
 
 
 
-  doAddJob():void{
+  doAddJob(): void {
     console.log("Adding job details");
     this.router.navigate(['add']);
   }
 
 
-  doDelete(jobId:any){
-    const block:any='Yes';
-    console.log("Deleting job details with job ID "+ jobId.value);
+  doDelete(jobId: any) {
+    const block: any = 'Yes';
+    console.log("Deleting job details with job ID " + jobId.value);
 
     this.userService.deleteJob(jobId).subscribe(
       response => {
-        
+
         console.log(response.body);
-        
+
         this.snak.open("Job deleted", "OK");
         setTimeout(function () {
           window.location.reload();
@@ -103,7 +129,7 @@ export class JobComponent implements OnInit {
       }
     )
 
-   
+
 
   }
 
@@ -118,11 +144,11 @@ export class JobComponent implements OnInit {
     this.updatejob.endtime = item.endtime;
     this.updatejob.profitValue = item.profitValue;
     this.updatejob.role = item.role;
-    
+
   }
 
 
-  updateUserDetails(jobId:any) {
+  updateUserDetails(jobId: any) {
     debugger;
     console.log("try to save form");
     console.log("DATA ", this.job);
@@ -132,13 +158,13 @@ export class JobComponent implements OnInit {
       return;
     }
 
-    const {name,starttime, endtime, profitValue, role} = this.updatejob;
-   
-    
+    const { name, starttime, endtime, profitValue, role } = this.updatejob;
 
-    this.userService.updateJob(name,starttime,endtime,profitValue,role,jobId).subscribe(
+
+
+    this.userService.updateJob(name, starttime, endtime, profitValue, role, jobId).subscribe(
       response => {
-        console.log(response);   
+        console.log(response);
         this.snak.open("Updated job details Successfully", "OK");
         setTimeout(function () {
           window.location.reload();
@@ -157,102 +183,99 @@ export class JobComponent implements OnInit {
     this.jobList.forEach(element => {
       element.isPresent = false;
     });
-    item.isPresent = true;
+
 
     this.currentUser = this.token.getUser();
     console.log(this.currentUser.id);
 
-    console.log('Assigned role is '+this.currentUser.roles[0]);
+    console.log('Assigned role is' + this.currentUser.roles[0]);
 
-    let userid:any= this.currentUser.id;
-    let jobid:any= item.id;
-    let role:any = this.currentUser.roles[0];
-    let status:string='Allocate';
+    let userid: any = this.currentUser.id;
+    let jobid: any = item.id;
+    let role: any = this.currentUser.roles[0];
+    let status: string = 'Allocate';
 
 
-    this.userService.allocateJob(userid,jobid,role,status).subscribe(
+    this.userService.allocateJob(userid, jobid, role, status).subscribe(
       response => {
-        console.log(response);   
-        this.snak.open('Job allocated', "OK");
-        
+        console.log(response);
+        this.snak.open(response, "OK");
+        item.isPresent = true;
+        setTimeout(function () {
+          window.location.reload();
+        }, 4000);
+
       },
       err => {
-        console.log(err.error.message);
-        // this.snak.open('Job allocated', "OK")
+        console.log(err.error);
+        const myObj = JSON.parse(err.error);
+        this.snak.open(myObj.message, "OK");
       }
     )
 
-    
-    
-    
+
+
+
+
   }
 
 
   onAbort(job: any) {
-    // this.jobList.forEach(element => {
-    //   element.isPresent = false;
-    // });
-    // item.isPresent = true;
-  
-    job.isPresent = false;
-
     this.currentUser = this.token.getUser();
     console.log(this.currentUser.id);
 
-    console.log('Assigned role is '+this.currentUser.roles[0]);
+    console.log('Assigned role is ' + this.currentUser.roles[0]);
 
-    let userid:any= this.currentUser.id;
-    let jobid:any= job.id;
-    let role:any = this.currentUser.roles[0];
-    let status:string='Abort';
+    let userid: any = this.currentUser.id;
+    let jobid: any = job.id;
+    let role: any = this.currentUser.roles[0];
+    let status: string = 'Abort';
 
 
-    this.userService.abortJob(userid,jobid,role,status).subscribe(
+    this.userService.abortJob(userid, jobid, role, status).subscribe(
       response => {
-        console.log(response);   
-        this.snak.open('Job aborted', "OK");
-        
+        console.log(response);
+        this.snak.open(response, "OK");
+        job.isPresent = false;
+        setTimeout(function () {
+          window.location.reload();
+        }, 4000);
       },
       err => {
-        console.log(err.error.message);
-        // this.snak.open('Job aborted', "OK")
+        console.log(err.error);
+        const myObj = JSON.parse(err.error);
+        this.snak.open(myObj.message, "OK");
       }
     )
 
-    
-
-    
-
-    
   }
 
-  onComplete(job:any){
+  onComplete(job: any) {
     this.currentUser = this.token.getUser();
     console.log(this.currentUser.id);
 
-    console.log('Assigned role is '+this.currentUser.roles[0]);
+    console.log('Assigned role is ' + this.currentUser.roles[0]);
 
-    let userid:any= this.currentUser.id;
-    let jobid:any= job.id;
-    let role:any = this.currentUser.roles[0];
-    let status:string='Complete';
+    let userid: any = this.currentUser.id;
+    let jobid: any = job.id;
+    let role: any = this.currentUser.roles[0];
+    let status: string = 'Complete';
 
 
-    this.userService.completeJob(userid,jobid,role,status).subscribe(
+    this.userService.completeJob(userid, jobid, role, status).subscribe(
       response => {
-        console.log(response);   
-        this.snak.open('Job completed', "OK");
+        console.log(response);
+        this.snak.open(response, "OK");
         setTimeout(function () {
           window.location.reload();
-        }, 3000);
-        
+        }, 4000);
+
       },
       err => {
-        console.log(err.error.message);
-        // this.snak.open('Job completed', "OK");
-        setTimeout(function () {
-          window.location.reload();
-        }, 3000);
+        console.log(err.error);
+        const myObj = JSON.parse(err.error);
+        this.snak.open(myObj.message, "OK");
+       
       }
     )
 

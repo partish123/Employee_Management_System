@@ -12,10 +12,20 @@ const API_URL: string = 'http://localhost:8085/api/user/manage';
 })
 export class UserService {
   
+ 
+  
   constructor(private http: HttpClient, private token: TokenStorageService) { }
 
   getAllUsers(): Observable<any> {
     return this.http.get(`${API_URL}/getAllUsers`);
+  }
+
+  getAllEmployees(): Observable<any>{
+    return this.http.get(`${API_URL}/getAllEmployees`);
+  }
+
+  getEmployeeById(id:any) : Observable<any>{
+    return this.http.get(`${API_URL}/getEmployee/${id}`);
   }
 
   updateUser(firstname: string, lastname: string, email: string, role: any, userID: any): Observable<any> {
@@ -61,15 +71,15 @@ export class UserService {
 
 
   allocateJob(userid: any, jobid: any, role: any, status: string) {
-    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`);
+    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`, { responseType: 'text' });
   }
 
   abortJob(userid: any, jobid: any, role: any, status: string) {
-    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`);
+    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`, { responseType: 'text' });
   }
 
   completeJob(userid: any, jobid: any, role: any, status: string) {
-    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`);
+    return this.http.get(`${API_URL}/processJob/${jobid}/${userid}/${status}/${role}`, { responseType: 'text' });
   }
 
 

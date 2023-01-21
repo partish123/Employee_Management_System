@@ -14,6 +14,11 @@
     <strong>Email:</strong>
     {{ currentUser.email }}
   </p>
+  <p>
+    <strong>Total Salary Earned:</strong>
+    {{ salary }}
+  </p>
+  
   <strong>Roles:</strong>
   <ul>
     <li *ngFor="let role of currentUser.roles">

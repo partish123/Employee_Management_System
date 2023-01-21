@@ -36,6 +36,12 @@ username: rebellion
 password: Mahesh@123
 }
 
+role: User
+{
+username: mohan123
+password: Mohan@123
+}
+
 
 
 

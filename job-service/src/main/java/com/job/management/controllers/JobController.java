@@ -91,7 +91,7 @@ public class JobController {
     }
 
     @GetMapping("/processJob/{jobId}/{userId}/{status}/{role}")
-    public ResponseEntity<String> processJob(@PathVariable String jobId, @PathVariable String userId,@PathVariable String status,@PathVariable String role) throws JobException {
+    public ResponseEntity<?> processJob(@PathVariable String jobId, @PathVariable String userId,@PathVariable String status,@PathVariable String role) throws JobException {
         try {
             logger.info("Inside JobController processJob---{}",jobId);
             MessageResponse m = jobService.processJob(Long.parseLong(jobId),Long.parseLong(userId),status,role);

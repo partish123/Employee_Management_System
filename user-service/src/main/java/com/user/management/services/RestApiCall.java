@@ -105,7 +105,7 @@ public class RestApiCall {
 
 
 
-    public ResponseEntity<String> processJob(String url) {
+    public ResponseEntity<?> processJob(String url) {
         logger.info("Inside RestAPICall processJob----{}",url);
         String result = restTemplate.getForObject(JOB_URL+url,String.class);
         assert result != null;
