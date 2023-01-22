@@ -203,7 +203,7 @@ export class JobComponent implements OnInit {
         item.isPresent = true;
         setTimeout(function () {
           window.location.reload();
-        }, 4000);
+        }, 2000);
 
       },
       err => {
@@ -239,7 +239,7 @@ export class JobComponent implements OnInit {
         job.isPresent = false;
         setTimeout(function () {
           window.location.reload();
-        }, 4000);
+        }, 2000);
       },
       err => {
         console.log(err.error);
@@ -268,7 +268,7 @@ export class JobComponent implements OnInit {
         this.snak.open(response, "OK");
         setTimeout(function () {
           window.location.reload();
-        }, 4000);
+        }, 2000);
 
       },
       err => {

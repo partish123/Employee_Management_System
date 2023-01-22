@@ -201,8 +201,8 @@ public class JobService {
 
 
             jobRepository.save(job.get());
-
-            return new MessageResponse("Job "+ status +" done");
+            String message= status +" Job  done";
+            return new MessageResponse(message);
         } else {
             throw new JobException("Job not processed...Your role is not applicable for this job!");
         }
