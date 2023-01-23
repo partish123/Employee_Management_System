@@ -4,11 +4,17 @@
     <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required
+        <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required minlength="3" maxlength="15" pattern="^[a-zA-Z0-9._]{3,15}$"
           #username="ngModel" />
-        <div class="alert alert-danger" role="alert"
-          *ngIf="username.errors && f.submitted">
-          Username is required!
+        <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
+          <div *ngIf="username.errors.required">Username is required!</div>
+          <div *ngIf="username.errors.minlength">
+            Username must be at least 3 characters
+          </div>
+          <div *ngIf="username.errors.pattern">
+            Entered username does not meet expectations..please enter valid username
+          </div>
+          
         </div>
       </div>
 
@@ -18,11 +24,15 @@
           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$"
           #password="ngModel" />
         <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
-          <!-- <div *ngIf="password.errors.required">Password is required</div>
+          <div *ngIf="password.errors.required">Password is required</div>
           <div *ngIf="password.errors.minlength">
             Password must be at least 6 characters
-          </div> -->
-          <div *ngIf="password.errors.pattern || password.errors.required || password.errors.minlength">
+          </div>
+          <div *ngIf="password.errors.pattern">
+            Entered password does not meet expectations..please enter valid password
+          </div>
+
+          <!-- <div *ngIf="password.errors.pattern || password.errors.required || password.errors.minlength">
               Password should be in following pattern.<br>
               <ul>
                 <li> At least 1 Uppercase</li>
@@ -31,7 +41,7 @@
                 <li>At least 1 Symbol and allowed symbols are !@#$%^&*_=+-</li>
                 <li>Minimum 6 characters and Maximum 15 characters</li>
               </ul>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -51,8 +61,8 @@
       </div>
     </form>
 
-    <div class="alert alert-success" *ngIf="isLoggedIn">
+    <!-- <div class="alert alert-success" *ngIf="isLoggedIn">
       Logged in as {{ roles }}
-    </div>
+    </div> -->
   </div>
 </div>

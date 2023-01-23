@@ -13,7 +13,7 @@ import { UserService } from '../_services/user.service';
 export class JobComponent implements OnInit {
 
   content?: string;
-
+  searchText:any;
 
   jobList: any[] = [];
   sortedList: any[] = [];

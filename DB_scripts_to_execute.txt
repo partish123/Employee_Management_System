@@ -42,6 +42,12 @@ username: mohan123
 password: Mohan@123
 }
 
+role: User
+{
+username: raj642
+password: Raja@123
+}
+
 
 
 
@@ -91,4 +97,17 @@ Insert into userdb.user_roles(user_id,role_id) values ('1','1');
 
 1	7	14:30:00	2023-01-18	2023-01-19	Bugs	700	ROLE_ANALYST	13:30:00	IN_PROGRESS
 2		12:15:00	2023-01-18		   JOB1	      200	    ROLE_TESTER	11:15:00	NOT_STARTED
-4		12:15:00	2023-01-19		  Test1	    200	  ROLE_TESTER	11:15:00	NOT_STARTED
+4		12:15:00	2023-01-19
+
+
+
+
+
+		  Test1	    200	  ROLE_TESTER	11:15:00	NOT_STARTED
+
+
+
+
+
+Login Password validation to be removed,..only Required message to be shown.
+Username special characters other thn dot and underscore

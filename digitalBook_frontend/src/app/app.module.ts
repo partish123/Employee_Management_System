@@ -30,6 +30,7 @@ import { BoardAuthorComponent } from './board-author/board-author.component';
 import { ReaderBooksComponent } from './reader-books/reader-books.component';
 import { JobComponent } from './job/job.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MatRadioModule } from '@angular/material/radio';
     BoardAuthorComponent,
     ReaderBooksComponent,
     JobComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatRadioModule
+    MatRadioModule,
+    Ng2SearchPipeModule
   ],
   providers: [authInterceptorProviders,MatSnackBar,UserService],
   bootstrap: [AppComponent]

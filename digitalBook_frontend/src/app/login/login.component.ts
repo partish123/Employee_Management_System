@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
+      this.router.navigateByUrl('/home');
     }
   }
 
@@ -49,7 +50,11 @@ export class LoginComponent implements OnInit {
   }
 
   reloadPage(): void {
-    window.location.reload();
+   
+   // this.ngOnInit();
+   // this.router.navigate(['/home']);
+   window.location.reload();
+   //this.router.navigateByUrl('/home');
     
   }
 }

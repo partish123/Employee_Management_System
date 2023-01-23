@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 
@@ -19,7 +20,7 @@ export class RegisterComponent {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router:Router) { }
+  constructor(private authService: AuthService, private router:Router,private snak: MatSnackBar) { }
 
 
 
@@ -33,7 +34,11 @@ export class RegisterComponent {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
-        this.router.navigate(['home']);
+        this.snak.open("Your registration is successful!!! ", "OK");
+        setTimeout( () => {
+          this.router.navigate(['home']);
+        }, 2000);
+       
      
       },
       err => {

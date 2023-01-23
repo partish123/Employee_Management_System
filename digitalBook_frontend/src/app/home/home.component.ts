@@ -9,6 +9,8 @@ import { UserService } from '../_services/user.service';
 })
 
 export class HomeComponent implements OnInit {
+
+ 
  
   //content?: string;
 
@@ -28,11 +30,13 @@ export class HomeComponent implements OnInit {
   constructor(private snack:MatSnackBar){}
 
   ngOnInit(): void {
+   // window.location.reload();
   }
 
   btnClick(){
     console.log("Button clicked");
     this.snack.open("Hey Welcome to Employee Management Application");
+    window.location.reload();
   }
 
 
