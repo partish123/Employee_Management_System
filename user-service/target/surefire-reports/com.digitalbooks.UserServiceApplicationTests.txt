@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.digitalbooks.UserServiceApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 75.407 s - in com.digitalbooks.UserServiceApplicationTests
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.247 s <<< FAILURE! - in com.digitalbooks.UserServiceApplicationTests
+initializationError(com.digitalbooks.UserServiceApplicationTests)  Time elapsed: 0.006 s  <<< ERROR!
+java.lang.NoClassDefFoundError: org/springframework/test/context/TestContextAnnotationUtils
+Caused by: java.lang.ClassNotFoundException: org.springframework.test.context.TestContextAnnotationUtils
+
