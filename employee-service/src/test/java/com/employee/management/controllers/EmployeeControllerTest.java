@@ -35,9 +35,7 @@ public class EmployeeControllerTest {
     @MockBean
     private EmployeeService employeeService;
 
-    /**
-     * Method under test: {@link EmployeeController#createEmployee(CreateEmployeePayload)}
-     */
+
     @Test
     public void testCreateEmployee() throws Exception {
         when(employeeService.createEmployee((CreateEmployeePayload) any()))
@@ -61,9 +59,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Employee added successfully!"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#updateEmployee(UpdateEmployeePayload, String)}
-     */
+
     @Test
     public void testUpdateEmployee() throws Exception {
         when(employeeService.updateEmployee((UpdateEmployeePayload) any(), (Long) any()))
@@ -89,9 +85,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Employee added successfully!"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#deleteEmployee(String)}
-     */
+
     @Test
     public void testDeleteEmployee() throws Exception {
         when(employeeService.deleteEmployee((Long) any())).thenReturn(new MessageResponse("Not all who wander are lost"));
@@ -105,9 +99,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Employee added successfully!"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#getAllEmployees()}
-     */
+
     @Test
     public void testGetAllEmployees() throws Exception {
         when(employeeService.getAllEmployees()).thenReturn("All Employees");
@@ -120,9 +112,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("All Employees"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#getAllEmployees()}
-     */
+
     @Test
     public void testGetAllEmployees2() throws Exception {
         when(employeeService.getAllEmployees()).thenReturn(null);
@@ -135,9 +125,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Failed to retrieve list of employees!"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#getEmployee(String)}
-     */
+
     @Test
     public void testGetEmployee() throws Exception {
         when(employeeService.getEmployee((Long) any())).thenReturn("Employee");
@@ -151,9 +139,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Employee"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#getEmployee(String)}
-     */
+
     @Test
     public void testGetEmployee2() throws Exception {
         when(employeeService.getEmployee((Long) any())).thenReturn(null);
@@ -167,9 +153,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Failed to retrieve employee!"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#updateSalary(String, String)}
-     */
+
     @Test
     public void testUpdateSalary2() throws Exception {
         when(employeeService.updateSalary(anyLong(), anyDouble()))
@@ -184,9 +168,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Employee salary updated successfully!"));
     }
 
-    /**
-     * Method under test: {@link EmployeeController#updateSalary(String, String)}
-     */
+
     @Test
     public void testUpdateSalary() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
