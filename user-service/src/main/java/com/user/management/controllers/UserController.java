@@ -112,19 +112,19 @@ public class UserController {
     }
     
     
-    @GetMapping("/getUser/{id}")
-    public ResponseEntity<?> getUserById(String id) throws UserException {
-        try {
-			System.out.println("Inside UserController getUserById-");
-        	Object user = userService.getUserById(Long.parseLong(id));
-            if(user!=null)
-            return new ResponseEntity<>(user,HttpStatus.OK);
-            else
-            	return ResponseEntity.status(500).body("Failed to retrieve user!");
-        }catch (Exception e){
-            throw new UserException("Sorry something went wrong in create ",e);
-        }
-    }
+//    @GetMapping("/getUser/{id}")
+//    public ResponseEntity<?> getUserById(String id) throws UserException {
+//        try {
+//			System.out.println("Inside UserController getUserById-");
+//        	Object user = userService.getUserById(Long.parseLong(id));
+//            if(user!=null)
+//            return new ResponseEntity<>(user,HttpStatus.OK);
+//            else
+//            	return ResponseEntity.status(500).body("Failed to retrieve user!");
+//        }catch (Exception e){
+//            throw new UserException("Sorry something went wrong in create ",e);
+//        }
+//    }
 	
 	
 	

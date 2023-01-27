@@ -119,4 +119,22 @@ Username special characters other thn dot and underscore
 
 AWS EC2 VM Password: MbcW9BlDBj$z$FF*1ktEi;b6fd.4mXR3
 
-API gateway: https://172.31.48.85:
+API gateway urls: 
+
+http://100.26.215.74:8085/api/user/sign-in
+http://100.26.215.74:8085/api/user/sign-up
+http://100.26.215.74:8085/api/user/manage/createJob
+http://100.26.215.74:8085/api/user/manage/updateJob/{id}
+http://100.26.215.74:8085/api/user/manage/getAllJobs
+http://100.26.215.74:8085/api/user/manage/deleteJob/{id}
+http://100.26.215.74:8085/api/user/manage/deleteUser/{id}
+http://100.26.215.74:8085/api/user/manage/getAllEmployees
+http://100.26.215.74:8085/api/user/manage/getAllUsers
+http://100.26.215.74:8085/api/user/manage/getEmployee/{id}
+http://100.26.215.74:8085/api/user/manage/processJob/{jobId}/{userId}/{status}/{role}
+http://100.26.215.74:8085/api/user/manage/updateUser/{id}
+http://100.26.215.74:8085/api/user/manage
+http://100.26.215.74:8085/api/user/manage
+http://100.26.215.74:8085/api/user/manage
+http://100.26.215.74:8085/api/user/manage
+
