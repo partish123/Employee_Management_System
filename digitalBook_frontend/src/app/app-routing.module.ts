@@ -11,10 +11,14 @@ import { AddjobComponent } from './components/add-job/addjob.component';
 
 import { JobComponent } from './components/job/job.component';
 import { AuthGuard } from './_services/auth-guard/auth.guard';
+import { SigninComponent } from './components/signin/signin.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'signIn', component: SigninComponent },
+  { path: 'signUp', component: SignupComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   // { path: 'admin', component: BoardAdminComponent ,canActivate: [AuthGuard] },
@@ -28,7 +32,7 @@ const routes: Routes = [
   // { path: 'jobs', loadChildren:'./modules/job-add.module#JobAddModule', canActivate: [AuthGuard]},
   { path: 'add', component: AddjobComponent, canActivate: [AuthGuard] },
   //{ path: 'jobs', component: JobComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'signIn', pathMatch: 'full' }
 ];
 
 @NgModule({

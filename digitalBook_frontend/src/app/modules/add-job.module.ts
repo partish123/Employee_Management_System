@@ -13,7 +13,7 @@ import { RouterModule } from "@angular/router";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 
 import { AddjobComponent } from "../components/add-job/addjob.component";
-import { JobComponent } from "../components/job/job.component";
+//import { JobComponent } from "../components/job/job.component";
 
 @NgModule({
     declarations: [

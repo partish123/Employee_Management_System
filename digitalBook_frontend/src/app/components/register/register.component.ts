@@ -36,7 +36,7 @@ export class RegisterComponent {
         this.isSignUpFailed = false;
         this.snak.open("Your registration is successful!!! ", "OK");
         setTimeout( () => {
-          this.router.navigate(['home']);
+          this.router.navigate(['login']);
         }, 2000);
        
      
